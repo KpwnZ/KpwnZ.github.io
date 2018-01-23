@@ -1,0 +1,8 @@
+Origin: K-Repo
+Label: K-Repo
+Suite: beta
+Version: 1.0
+Codename: K-Repo
+Architectures: iphoneos-arm
+Components: main
+Description: K-Repo

@@ -1,0 +1,48 @@
+Package: com.xcxiao.dockxiplus
+Version: 3.0.0.493
+Architecture: iphoneos-arm
+Maintainer: XCXiao
+Installed-Size: 664
+Depends: mobilesubstrate, libactivator
+Filename: ./debs/com.xcxiao.dockxiplus_3.0.0.493_iphoneos-arm.deb
+Size: 106576
+MD5sum: fad2ea4e49701f7920ab35403199e9f5
+SHA1: e9534f5772cede7a6abcfa90c2f486f217718dab
+SHA256: e70fb210ce08ce3a5506897555b123356c9313ce830af350ffa39068b7176a47
+Section: Tweaks
+Description: An awesome MobileSubstrate tweak!
+Author: XCXiao
+Name: DockPlus_For_iPad
+
+Package: com.xcxiao.dockxiplusiphone
+Version: 2.0.1.285
+Architecture: iphoneos-arm
+Maintainer: XCXiao
+Installed-Size: 1072
+Depends: mobilesubstrate, libactivator, org.thebigboss.libcolorpicker
+Filename: ./debs/com.xcxiao.dockxiplusiphone_2.0.1.285_iphoneos-arm.deb
+Size: 193838
+MD5sum: 870f44e5d33f4aa0e0ae2b075b5b0e09
+SHA1: b0f0514a26897486b8d93e7cdef6ca9e88122040
+SHA256: f13070a69a527db1fdd0fb2cb52bdf6e3b7fd341f6ddebb09c18ef6e8ff95db7
+Section: Tweaks
+Description: Dock+, drag&drop / multi-tasking tweak inspired by iOS 11.
+Author: XCXiao
+Name: DockPlus_For_iPhone
+
+Package: com.xcxiao.simplelsios10
+Version: 2.0.0.512
+Architecture: iphoneos-arm
+Maintainer: XCXiao
+Installed-Size: 580
+Depends: mobilesubstrate
+Filename: ./debs/com.xcxiao.simplelsios10_2.0.0.512_iphoneos-arm.deb
+Size: 118974
+MD5sum: 68a4096bdd26a3e8dc0253f295df9acf
+SHA1: 8f01e0f4a3b5253bcb0ea5ca1586a9636bbf99fa
+SHA256: 7e10871b9abcf6992d6ee6504e4a80a1562506c764d3f00ff07dd22e716af261
+Section: Tweaks
+Description: Simple lockscreen for iOS 10/11 devices.
+Author: XCXiao
+Name: SimpleLS_For_iOS
+
