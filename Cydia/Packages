@@ -1,30 +1,30 @@
-Package: com.xcxiao.dockxiplus
+Package: com.xcxiao.dockxiplus.beta
 Version: 3.0.0.493
 Architecture: iphoneos-arm
 Maintainer: XCXiao
 Installed-Size: 664
 Depends: mobilesubstrate, libactivator
-Filename: ./debs/com.xcxiao.dockxiplus_3.0.0.493_iphoneos-arm.deb
-Size: 106576
-MD5sum: fad2ea4e49701f7920ab35403199e9f5
-SHA1: e9534f5772cede7a6abcfa90c2f486f217718dab
-SHA256: e70fb210ce08ce3a5506897555b123356c9313ce830af350ffa39068b7176a47
+Filename: ./debs/com.xcxiao.dockxiplus.beta_3.0.0.493_iphoneos-arm.deb
+Size: 106598
+MD5sum: 6f5f50e8f29d39338e2bd02fd40e2b5e
+SHA1: 2ad9c08b76f180096b562fe6ed7d0bd8861b8385
+SHA256: 1438e070042b99f43d201a23b562a816aec671d5e0fb5abd44d11e0c2a5e51ae
 Section: Tweaks
 Description: An awesome MobileSubstrate tweak!
 Author: XCXiao
 Name: DockPlus_For_iPad
 
-Package: com.xcxiao.dockxiplusiphone
+Package: com.xcxiao.dockxiplusiphone.beta
 Version: 2.0.1.285
 Architecture: iphoneos-arm
 Maintainer: XCXiao
 Installed-Size: 1072
 Depends: mobilesubstrate, libactivator, org.thebigboss.libcolorpicker
-Filename: ./debs/com.xcxiao.dockxiplusiphone_2.0.1.285_iphoneos-arm.deb
-Size: 193838
-MD5sum: 870f44e5d33f4aa0e0ae2b075b5b0e09
-SHA1: b0f0514a26897486b8d93e7cdef6ca9e88122040
-SHA256: f13070a69a527db1fdd0fb2cb52bdf6e3b7fd341f6ddebb09c18ef6e8ff95db7
+Filename: ./debs/com.xcxiao.dockxiplusiphone.beta_2.0.1.285_iphoneos-arm.deb
+Size: 193942
+MD5sum: 2f0baaaea87c0e83068a62e6a19b5c40
+SHA1: f6f1f7a271e8af2eb62e9a285493412b49f37f14
+SHA256: d18206dd2312cb116fa9368e932a7c4823c8708ad76904d9ce1a721110fb9f4f
 Section: Tweaks
 Description: Dock+, drag&drop / multi-tasking tweak inspired by iOS 11.
 Author: XCXiao
