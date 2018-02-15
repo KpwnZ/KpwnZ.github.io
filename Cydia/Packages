@@ -46,3 +46,19 @@ Description: Simple lockscreen for iOS 10/11 devices.
 Author: XCXiao
 Name: SimpleLS_For_iOS
 
+Package: com.xcxiao.wakeitup
+Version: 0.0.1-163+debug
+Architecture: iphoneos-arm
+Maintainer: XCXiao
+Installed-Size: 664
+Depends: mobilesubstrate
+Filename: ./debs/com.xcxiao.wakeitup_0.0.1-163+debug_iphoneos-arm.deb
+Size: 110352
+MD5sum: 60652ac40577af04f3bd2209738c089a
+SHA1: 1a335cb56ab0728e17a6032df824b2bcfde30a0b
+SHA256: e7358d6686055f9e64b0b75ae4660f48b4a5d4a6fdd3ad0ca794bbac2596eaaf
+Section: Tweaks
+Description: An awesome MobileSubstrate tweak!
+Author: XCXiao
+Name: WakeItUp
+
