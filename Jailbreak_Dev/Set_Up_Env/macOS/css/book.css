@@ -1,0 +1,204 @@
+a{
+	text-decoration: none;
+}
+h1{
+	-webkit-hyphens: none;
+	color: #000000;
+	font-family: "Baskerville";
+	font-size: 13.0px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	hyphens: none;
+	letter-spacing: 0;
+	margin-bottom: 0;
+	margin-left: 0;
+	margin-right: 0;
+	margin-top: 0;
+	text-align: left;
+	text-decoration: none;
+	text-indent: 0;
+	text-transform: none;
+}
+p{
+	margin: 0px;
+}
+sub{
+	font-size: 67%;
+	vertical-align: -10%;
+}
+sup{
+	font-size: 67%;
+	vertical-align: 33%;
+}
+td{
+	overflow: hidden;
+}
+.p1{
+	-webkit-hyphens: none;
+	color: #000000;
+	font-family: "Baskerville";
+	font-size: 10.0px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	hyphens: none;
+	letter-spacing: 0;
+	text-align: right;
+	text-indent: 0;
+	text-transform: uppercase;
+}
+.p2{
+	-webkit-hyphens: none;
+	color: #000000;
+	font-family: "Baskerville";
+	font-size: 30.0px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	hyphens: none;
+	letter-spacing: 0;
+	text-align: left;
+	text-indent: 0;
+	text-transform: none;
+}
+.p3{
+	-webkit-hyphens: none;
+	color: #5C432B;
+	font-family: "Baskerville";
+	font-size: 18.0px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	hyphens: none;
+	letter-spacing: 0;
+	text-align: center;
+	text-decoration: none;
+	text-indent: 0;
+	text-transform: none;
+}
+.p4{
+	font-size: 30.0px;
+}
+.p5{
+	-webkit-hyphens: none;
+	color: #000000;
+	font-family: "Baskerville";
+	font-size: 12.0px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	hyphens: none;
+	letter-spacing: 0;
+	text-align: left;
+	text-decoration: none;
+	text-indent: 0;
+	text-transform: none;
+}
+.p6{
+	font-size: 20.0px;
+}
+.p7{
+	-webkit-hyphens: none;
+	color: #000000;
+	font-family: "Baskerville";
+	font-size: 20.0px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	hyphens: none;
+	letter-spacing: 0;
+	text-align: left;
+	text-decoration: none;
+	text-indent: 0;
+	text-transform: none;
+}
+.p8{
+	font-family: "PingFang SC Regular";
+	font-size: 15.0px;
+}
+.p9{
+	-webkit-hyphens: none;
+	color: #000000;
+	font-family: "PingFang SC Regular";
+	font-size: 20.0px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	hyphens: none;
+	letter-spacing: 0;
+	text-align: left;
+	text-decoration: none;
+	text-indent: 0;
+	text-transform: none;
+}
+.p10{
+	font-size: 15.0px;
+}
+.p11{
+	font-family: "PingFang SC Regular";
+	font-size: 9.0px;
+}
+.p12{
+	-webkit-hyphens: none;
+	color: #000000;
+	font-family: "Baskerville";
+	font-size: 15.0px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	hyphens: none;
+	letter-spacing: 0;
+	text-align: left;
+	text-indent: 0;
+	text-transform: none;
+}
+.p13{
+	-webkit-hyphens: none;
+	color: #444444;
+	font-family: "Baskerville";
+	font-size: 12.0px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	hyphens: none;
+	letter-spacing: 0;
+	text-align: left;
+	text-indent: 0;
+	text-transform: none;
+}
+.p14{
+	font-family: "PingFang SC Regular";
+	font-size: 15.0px;
+	text-align: center;
+}
+.c1{
+	font-size: 1px;
+}
+.c2{
+	font-size: 10.0px;
+}
+.c3{
+	font-size: 30.0px;
+}
+.c4{
+	font-size: 20.0px;
+}
+.c5{
+	font-size: 15.0px;
+}
+.c6{
+	color: #032F62;
+}
+.c7{
+	font-family: "PingFang SC Regular";
+}
+.c8{
+	font-size: 9.0px;
+}
+.c9{
+	font-size: 12.0px;
+}
+.c10{
+	color: #000000;
+}
