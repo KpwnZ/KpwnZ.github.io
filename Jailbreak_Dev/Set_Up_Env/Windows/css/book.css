@@ -1,0 +1,37 @@
+/* unvisited link */
+a:link {
+    color: initial;
+}
+
+/* visited link */
+a:visited {
+    color: initial;
+}
+
+/* mouse over link */
+a:hover {
+    color: initial;
+}
+
+/* selected link */
+a:active {
+    color: initial;
+}
+
+a{
+	text-decoration: none;
+}
+p{
+	margin: 0px;
+}
+sub{
+	vertical-align: -10%;
+	font-size: 67%;
+}
+sup{
+	vertical-align: 33%;
+	font-size: 67%;
+}
+.s1{
+	list-style: none;
+}
