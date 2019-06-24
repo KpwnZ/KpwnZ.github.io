@@ -1,64 +1,16 @@
-Package: com.xcxiao.dockxiplus.beta
-Version: 3.0.0.508
+Package: com.xcxiao.simplels2
+Version: 0.0.1-381
 Architecture: iphoneos-arm
 Maintainer: XCXiao
-Installed-Size: 696
-Depends: mobilesubstrate, libactivator
-Filename: ./debs/com.xcxiao.dockxiplus.beta_3.0.0.508_iphoneos-arm.deb
-Size: 166282
-MD5sum: 82603007eea102bb8df08a024a739ec4
-SHA1: b05dfd2f942f8414b0bcca076840a768c6d731e0
-SHA256: f71269cff383fd9c4e9254e9d1bfb9d3ebc795c50b8fc388d79329aa47114959
-Section: Tweaks
-Description: Dock+, drag&drop / multi-tasking tweak inspired by iOS 11.
-Author: XCXiao
-Name: DockXI_Plus_iPad
-
-Package: com.xcxiao.dockxiplusiphone.beta
-Version: 3.0.0.298
-Architecture: iphoneos-arm
-Maintainer: XCXiao
-Installed-Size: 1108
-Depends: mobilesubstrate, libactivator, org.thebigboss.libcolorpicker
-Filename: ./debs/com.xcxiao.dockxiplusiphone.beta_3.0.0.298_iphoneos-arm.deb
-Size: 300034
-MD5sum: ac12dde6a8f1801f9be50175aa0d4167
-SHA1: afd15600be755c4e5e51aa8e31e8507bf9af0342
-SHA256: 21b1e5a75ee2a09bb4787aa345a7c45cbbc601ff3c2b50554b1bf77a9ec01aef
-Section: Tweaks
-Description: Dock+, drag&drop / multi-tasking tweak inspired by iOS 11.
-Author: XCXiao
-Name: DockXI_Plus_For_iPhone
-
-Package: com.xcxiao.simplelsios10
-Version: 2.0.0.512
-Architecture: iphoneos-arm
-Maintainer: XCXiao
-Installed-Size: 580
+Installed-Size: 552
 Depends: mobilesubstrate
-Filename: ./debs/com.xcxiao.simplelsios10_2.0.0.512_iphoneos-arm.deb
-Size: 149526
-MD5sum: e66321dd2f8e58583639a4d919096579
-SHA1: dc4406852de7ec0944781b91c2a55c0703ff0c5f
-SHA256: 48141dda52a0b51e4b1c0f71340035d43505c5a81b73b900ef9df52ba8b90ab9
+Filename: ./debs/com.xcxiao.simplels2_0.0.1-381_iphoneos-arm.deb
+Size: 108354
+MD5sum: ea727ce085ad0c1dde7ceb2b276b4ee4
+SHA1: be50bdfaf5380d5938aa5f3d20d8e58750bed0e6
+SHA256: 09bad2424cf8c63282113dcd1816fc357c4df0d81c1b6426ef3048ddcf0cd11a
 Section: Tweaks
-Description: Simple lockscreen for iOS 10/11 devices.
+Description: SimpleLS
 Author: XCXiao
-Name: SimpleLS_For_iOS
-
-Package: com.xcxiao.wakeitup
-Version: 0.0.1-163+debug
-Architecture: iphoneos-arm
-Maintainer: XCXiao
-Installed-Size: 664
-Depends: mobilesubstrate
-Filename: ./debs/com.xcxiao.wakeitup_0.0.1-163+debug_iphoneos-arm.deb
-Size: 110352
-MD5sum: 60652ac40577af04f3bd2209738c089a
-SHA1: 1a335cb56ab0728e17a6032df824b2bcfde30a0b
-SHA256: e7358d6686055f9e64b0b75ae4660f48b4a5d4a6fdd3ad0ca794bbac2596eaaf
-Section: Tweaks
-Description: An awesome MobileSubstrate tweak!
-Author: XCXiao
-Name: WakeItUp
+Name: SimpleLS2
 
