@@ -78,6 +78,22 @@ Description: SimpleLS
 Author: XCXiao
 Name: SimpleLS2
 
+Package: com.xcxiao.simplels2
+Version: 1.3.0-b1-50+debug
+Architecture: iphoneos-arm
+Maintainer: XCXiao
+Installed-Size: 3116
+Depends: mobilesubstrate
+Filename: ./debs/com.xcxiao.simplels2_1.3.0-b1-50+debug_iphoneos-arm.deb
+Size: 926402
+MD5sum: 6581469609c18c8d25b2a68c7e3db122
+SHA1: f2e33969cca88b5a2d2d1536eb7a1628762827fe
+SHA256: 49f187b8fa05192831a92943a0d991812f8c3143b91ff2c3d6a6ffca93753a10
+Section: Tweaks
+Description: SimpleLS
+Author: XCXiao
+Name: SimpleLS2
+
 Package: com.xcxiao.weatherunlocktext
 Version: 0.0.1-9+debug
 Architecture: iphoneos-arm
