@@ -55,7 +55,7 @@
   isHome: true,
   isHighlightShrink: false,
   isToc: false,
-  postUpdate: '2023-05-08 13:50:16'
+  postUpdate: '2023-05-08 18:01:04'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -145,6 +145,7 @@
     }
     detectApple()
     })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://avatars.githubusercontent.com/u/22996989?s=400&amp;u=470b81ce0dd0fd2e15880f564e1bef0ba9655225&amp;v=4" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">15</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">16</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('https://api.dujin.org/bing/1920.php')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/"></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title"></h1><div id="site-subtitle"><span id="subtitle"></span></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/05/08/SDCTF-2023-Writeup/" title="SDCTF 2023 Writeup">SDCTF 2023 Writeup</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2023-05-08T04:41:03.000Z" title="Created 2023-05-08 12:41:03">2023-05-08</time></span></div><div class="content">SDCTF 2023 Writeup
+I was so excited to participate in my first SDCTF event as an incoming student of UC San Diego. :-) It was a great opportunity to learn new skills, meet awesome people and have fun solving challenges. I really enjoyed the experience and I can’t wait for the next one!
 
 
 SDCTF 2023 Writeup
@@ -179,9 +180,7 @@ Lake of Pseudo Random Fire
 
 
 PWN
-Turtle Shell
-Bypass the checking with add rax, 0x1
-123456789101112131415161718192021from pwn import *sh = process(&quot;./turtle-shell&quot;)sh = remote(&quot;turtle.sdc.tf&quot;, 1337)context.arch = &#x27;amd64&#x27;shellcode = &quot;&quot;&quot;xor 	rsi,	rsipush	rsi		mo ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/04/25/CVE-2020-11102-Escape-from-the-Earth/" title="CVE-2020-11102: Escape from the Earth">CVE-2020-11102: Escape from the Earth</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2023-04-24T16:50:54.000Z" title="Created 2023-04-25 00:50:54">2023-04-25</time></span></div><div class="content">CVE-2020-11102: Escape from the Earth
+Turt ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/04/25/CVE-2020-11102-Escape-from-the-Earth/" title="CVE-2020-11102: Escape from the Earth">CVE-2020-11102: Escape from the Earth</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2023-04-24T16:50:54.000Z" title="Created 2023-04-25 00:50:54">2023-04-25</time></span></div><div class="content">CVE-2020-11102: Escape from the Earth
 Introduction
 I participated in the Aliyun CTF competition recently and solved an interesting challenge based on CVE-2020-11102, which is a vulnerability in qemu that allows guest OS to escape and execute arbitrary code on the host OS. In this article, I would like to share some detail about the challenge and what I learned from it.
 The vulnerability
