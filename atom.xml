@@ -183,9 +183,9 @@
     
     <category term="PWN" scheme="https://kpwnz.github.io/tags/PWN/"/>
     
-    <category term="XNU" scheme="https://kpwnz.github.io/tags/XNU/"/>
-    
     <category term="iOS" scheme="https://kpwnz.github.io/tags/iOS/"/>
+    
+    <category term="XNU" scheme="https://kpwnz.github.io/tags/XNU/"/>
     
     <category term="IOKit" scheme="https://kpwnz.github.io/tags/IOKit/"/>
     
@@ -391,11 +391,11 @@
     
     <category term="Vulnerability" scheme="https://kpwnz.github.io/tags/Vulnerability/"/>
     
+    <category term="iOS" scheme="https://kpwnz.github.io/tags/iOS/"/>
+    
     <category term="XNU" scheme="https://kpwnz.github.io/tags/XNU/"/>
     
     <category term="macOS" scheme="https://kpwnz.github.io/tags/macOS/"/>
-    
-    <category term="iOS" scheme="https://kpwnz.github.io/tags/iOS/"/>
     
     <category term="exploit" scheme="https://kpwnz.github.io/tags/exploit/"/>
     
