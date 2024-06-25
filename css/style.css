@@ -693,9 +693,8 @@ body {
     min-width: 48px;
     min-height: 48px;
   }
-  #header #nav li:not(:first-child) {
+  #header #nav li {
     padding-top: 1rem;
-    padding-left: 70px;
     font-size: 1rem;
   }
 }
