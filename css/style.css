@@ -471,7 +471,7 @@ html {
   margin: 0;
   padding: 0;
   height: 100%;
-  border-top: 2px solid #c9cacc;
+/*border-top: 2px solid $color-text*/
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
 }
@@ -1230,7 +1230,7 @@ article .content .caption {
   font-weight: 100;
   background-color: #1f2932 !important;
   padding: 3px 10px 3px 10px;
-  margin: 3px;
+  margin: 3px 3px 10px 3px;
   border-radius: 16px;
   text-decoration: none !important;
   background-image: none !important;
