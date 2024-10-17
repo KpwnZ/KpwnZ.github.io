@@ -209,6 +209,13 @@
 
   
   <url>
+    <loc>https://kpwnz.github.io/tags/No-pwn-no-life/</loc>
+    <lastmod>2024-10-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://kpwnz.github.io/tags/Vulnerability/</loc>
     <lastmod>2024-10-17</lastmod>
     <changefreq>weekly</changefreq>
@@ -244,13 +251,6 @@
   </url>
   
   <url>
-    <loc>https://kpwnz.github.io/tags/No-pwn-no-life/</loc>
-    <lastmod>2024-10-17</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://kpwnz.github.io/tags/iOS/</loc>
     <lastmod>2024-10-17</lastmod>
     <changefreq>weekly</changefreq>
@@ -272,20 +272,6 @@
   </url>
   
   <url>
-    <loc>https://kpwnz.github.io/tags/VM-Escape/</loc>
-    <lastmod>2024-10-17</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://kpwnz.github.io/tags/CTF/</loc>
-    <lastmod>2024-10-17</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://kpwnz.github.io/tags/XNU/</loc>
     <lastmod>2024-10-17</lastmod>
     <changefreq>weekly</changefreq>
@@ -294,6 +280,20 @@
   
   <url>
     <loc>https://kpwnz.github.io/tags/macOS/</loc>
+    <lastmod>2024-10-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://kpwnz.github.io/tags/VM-Escape/</loc>
+    <lastmod>2024-10-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://kpwnz.github.io/tags/CTF/</loc>
     <lastmod>2024-10-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -328,14 +328,14 @@
   </url>
   
   <url>
-    <loc>https://kpwnz.github.io/tags/Userland/</loc>
+    <loc>https://kpwnz.github.io/tags/v8/</loc>
     <lastmod>2024-10-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://kpwnz.github.io/tags/v8/</loc>
+    <loc>https://kpwnz.github.io/tags/Userland/</loc>
     <lastmod>2024-10-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
