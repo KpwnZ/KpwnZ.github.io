@@ -1,3 +1,5 @@
+https://kpwnz.github.io/2024/11/15/Save-Me-Web-Master-Pwn-N1CTF-2024-PHP-Master/
+https://kpwnz.github.io/2024/10/27/SpiderMonkey-Internal/
 https://kpwnz.github.io/2024/10/17/Securinets-CTF-Quals-2024-Blind-Firewall/
 https://kpwnz.github.io/2024/07/04/Pwn0win-iOS-pwning-challenges-in-R3CTF/
 https://kpwnz.github.io/2024/03/09/Boot-Newer-iOS-with-QEMU-Step-by-Step/
@@ -37,6 +39,8 @@ https://kpwnz.github.io/tags/CTF/
 https://kpwnz.github.io/tags/IOKit/
 https://kpwnz.github.io/tags/Linux/
 https://kpwnz.github.io/tags/kernel/
+https://kpwnz.github.io/tags/PHP/
+https://kpwnz.github.io/tags/Interpreter/
 https://kpwnz.github.io/tags/exploit/
 https://kpwnz.github.io/tags/v8/
 https://kpwnz.github.io/tags/Userland/

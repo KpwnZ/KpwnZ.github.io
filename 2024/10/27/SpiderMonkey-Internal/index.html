@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="SpiderMonkey Internal JSObject 12345678910111213&#x2F;&#x2F; Class Hierarchy&#x2F;&#x2F; ---------------&#x2F;&#x2F; Property maps have the following C++ class hierarchy:&#x2F;&#x2F;&#x2F;&#x2F;   PropMap (abstract)&#x2F;&#x2F;    |&#x2F;&#x2F;    +-- SharedPropMap (abs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpiderMonkey Internal">
+<meta property="og:url" content="https://kpwnz.github.io/2024/10/27/SpiderMonkey-Internal/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="SpiderMonkey Internal JSObject 12345678910111213&#x2F;&#x2F; Class Hierarchy&#x2F;&#x2F; ---------------&#x2F;&#x2F; Property maps have the following C++ class hierarchy:&#x2F;&#x2F;&#x2F;&#x2F;   PropMap (abstract)&#x2F;&#x2F;    |&#x2F;&#x2F;    +-- SharedPropMap (abs">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-10-27T10:35:24.000Z">
+<meta property="article:modified_time" content="2024-11-15T15:06:13.181Z">
+<meta property="article:author" content="Xia0o0o0o">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="../../../../https:/avatars.githubusercontent.com/u/22996989?s=400&amp;u=18dec832f23e8e1d9f7097245cd5b955990979b8&amp;v=4">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="../../../../https:/avatars.githubusercontent.com/u/22996989?s=400&amp;u=18dec832f23e8e1d9f7097245cd5b955990979b8&amp;v=4" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="../../../../https:/avatars.githubusercontent.com/u/22996989?s=400&amp;u=18dec832f23e8e1d9f7097245cd5b955990979b8&amp;v=4">
+        
+      
+    
+    <!-- title -->
+    <title>SpiderMonkey Internal</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="../../../../css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="atom.xml" title="" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+      <!--
+           -->
+        <li>
+          <span style="display: flex; align-items: center;">
+            <title>
+              Home
+            </title>
+            <svg data-testid="geist-icon" height="16" stroke-linejoin="round" viewBox="0 0 16 16" width="16" style="color: currentcolor;"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.5 6.56062L8.00001 2.06062L3.50001 6.56062V13.5L6.00001 13.5V11C6.00001 9.89539 6.89544 8.99996 8.00001 8.99996C9.10458 8.99996 10 9.89539 10 11V13.5L12.5 13.5V6.56062ZM13.78 5.71933L8.70711 0.646409C8.31659 0.255886 7.68342 0.255883 7.2929 0.646409L2.21987 5.71944C2.21974 5.71957 2.21961 5.7197 2.21949 5.71982L0.469676 7.46963L-0.0606537 7.99996L1.00001 9.06062L1.53034 8.53029L2.00001 8.06062V14.25V15H2.75001L6.00001 15H7.50001H8.50001H10L13.25 15H14V14.25V8.06062L14.4697 8.53029L15 9.06062L16.0607 7.99996L15.5303 7.46963L13.7806 5.71993C13.7804 5.71973 13.7802 5.71953 13.78 5.71933ZM8.50001 11V13.5H7.50001V11C7.50001 10.7238 7.72386 10.5 8.00001 10.5C8.27615 10.5 8.50001 10.7238 8.50001 11Z" fill="currentColor"></path></svg>
+              <a style="padding-left: 9px;" href="../../../../index.html">
+                Home
+              </a>
+          </span>
+        </li>
+        <!--
+           -->
+        <li>
+          <span style="display: flex; align-items: center;">
+            <title>
+              Writing
+            </title>
+            <svg data-testid="geist-icon" height="16" stroke-linejoin="round" viewBox="0 0 16 16" width="16" style="color: currentcolor;"><path clip-rule="evenodd" d="M4.25 0C3.00736 0 2 1.00736 2 2.25V11V11.25V11.5C2 12.5252 2.61705 13.4062 3.5 13.792V11.5V11.25V11C3.5 10.4477 3.94772 10 4.5 10H12.5V11.2305V12.5H10.5V14H12.5H14V12.5V11.2305V10V8.5V0.75V0H13.25H4.25ZM12.5 8.5V1.5H4.25C3.83579 1.5 3.5 1.83579 3.5 2.25V8.70802C3.80623 8.57422 4.14445 8.5 4.5 8.5H12.5ZM5.5 11.5C5.22386 11.5 5 11.7239 5 12V16L7 14.75L9 16V12C9 11.7239 8.77614 11.5 8.5 11.5H5.5Z" fill="currentColor" fill-rule="evenodd"></path></svg>
+              <a style="padding-left: 9px;" href="../../../../archives/">
+                Writing
+              </a>
+          </span>
+        </li>
+        <!--
+           -->
+        <li>
+          <span style="display: flex; align-items: center;">
+            <title>
+              Projects
+            </title>
+            <svg data-testid="geist-icon" height="16" stroke-linejoin="round" viewBox="0 0 16 16" width="16" style="color: currentcolor;"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.80808 4.44191L2.25003 4.88386L3.13391 3.99997L2.69196 3.55803L1.63391 2.49997L2.69197 1.44191L3.13391 0.999972L2.25003 0.116089L1.80808 0.558031L0.484858 1.88126C0.143149 2.22296 0.143149 2.77698 0.484859 3.11869L1.80808 4.44191ZM12 0.999972H11.25V2.49997H12H13.5V11.75C13.5 12.7165 12.7165 13.5 11.75 13.5H4.25002C3.28353 13.5 2.50003 12.7165 2.50003 11.75V6.99997V6.24997H1.00003V6.99997V11.75C1.00003 13.5449 2.4551 15 4.25002 15H11.75C13.545 15 15 13.5449 15 11.75V1.74997V0.999972H14.25H12ZM7.75003 4.88386L8.19197 4.44191L9.51519 3.11869C9.8569 2.77698 9.8569 2.22296 9.51519 1.88126L8.19196 0.55803L7.75002 0.116089L6.86614 0.999973L7.30808 1.44191L8.36614 2.49997L7.30809 3.55803L6.86615 3.99997L7.75003 4.88386ZM4.13155 3.89688L4.02847 4.51535L5.26541 4.7215L5.36848 4.10303L5.86848 1.10303L5.97156 0.484566L4.73462 0.278409L4.63155 0.896878L4.13155 3.89688Z" fill="currentColor"></path></svg>
+              <a style="padding-left: 9px;" href="../../../../https:/github.com/KpwnZ">
+                Projects
+              </a>
+          </span>
+        </li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="../../../11/15/Save-Me-Web-Master-Pwn-N1CTF-2024-PHP-Master/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="../../17/Securinets-CTF-Quals-2024-Blind-Firewall/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://kpwnz.github.io/2024/10/27/SpiderMonkey-Internal/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://kpwnz.github.io/2024/10/27/SpiderMonkey-Internal/&text=SpiderMonkey Internal"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://kpwnz.github.io/2024/10/27/SpiderMonkey-Internal/&title=SpiderMonkey Internal"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://kpwnz.github.io/2024/10/27/SpiderMonkey-Internal/&is_video=false&description=SpiderMonkey Internal"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SpiderMonkey Internal&body=Check out this article: https://kpwnz.github.io/2024/10/27/SpiderMonkey-Internal/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://kpwnz.github.io/2024/10/27/SpiderMonkey-Internal/&title=SpiderMonkey Internal"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://kpwnz.github.io/2024/10/27/SpiderMonkey-Internal/&title=SpiderMonkey Internal"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://kpwnz.github.io/2024/10/27/SpiderMonkey-Internal/&title=SpiderMonkey Internal"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://kpwnz.github.io/2024/10/27/SpiderMonkey-Internal/&title=SpiderMonkey Internal"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://kpwnz.github.io/2024/10/27/SpiderMonkey-Internal/&name=SpiderMonkey Internal&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://kpwnz.github.io/2024/10/27/SpiderMonkey-Internal/&t=SpiderMonkey Internal"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">SpiderMonkey Internal</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#JSObject"><span class="toc-number">1.1.</span> <span class="toc-text">JSObject</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        SpiderMonkey Internal
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Xia0o0o0o</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-10-27T10:35:24.000Z" class="dt-published" itemprop="datePublished">2024-10-27</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1>SpiderMonkey Internal</h1>
+<h2 id="JSObject">JSObject</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Class Hierarchy</span></span><br><span class="line"><span class="comment">// ---------------</span></span><br><span class="line"><span class="comment">// Property maps have the following C++ class hierarchy:</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//   PropMap (abstract)</span></span><br><span class="line"><span class="comment">//    |</span></span><br><span class="line"><span class="comment">//    +-- SharedPropMap (abstract)</span></span><br><span class="line"><span class="comment">//    |      |</span></span><br><span class="line"><span class="comment">//    |      +-- CompactPropMap</span></span><br><span class="line"><span class="comment">//    |      |</span></span><br><span class="line"><span class="comment">//    |      +-- NormalPropMap</span></span><br><span class="line"><span class="comment">//    |</span></span><br><span class="line"><span class="comment">//    +-- DictionaryPropMap</span></span><br></pre></td></tr></table></figure>
+<p>The <code>PropertyInfo</code> contains the slot index of the property.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">obj-&gt;<span class="built_in">getSlot</span>(prop.<span class="built_in">slot</span>());</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NativeObject</span> :</span> <span class="keyword">public</span> JSObject &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="function"><span class="keyword">const</span> Value&amp; <span class="title">getSlot</span><span class="params">(<span class="keyword">uint32_t</span> slot)</span> <span class="keyword">const</span> </span>&#123;</span><br><span class="line">    <span class="built_in">MOZ_ASSERT</span>(<span class="built_in">slotInRange</span>(slot));</span><br><span class="line">    <span class="keyword">uint32_t</span> fixed = <span class="built_in">numFixedSlots</span>();</span><br><span class="line">    <span class="keyword">if</span> (slot &lt; fixed) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">fixedSlots</span>()[slot];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> slots_[slot - fixed];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>[To be continued]</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+      <!--
+     --><li style="display: block;">
+        <span style="display: flex; align-items: center;">
+          <svg class="index-item-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="margin-right: 10px; color: white; width: 21px; ">
+            <title>Home</title>
+            <path d="<svg data-testid="geist-icon" height="16" stroke-linejoin="round" viewBox="0 0 16 16" width="16" style="color: currentcolor;"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.5 6.56062L8.00001 2.06062L3.50001 6.56062V13.5L6.00001 13.5V11C6.00001 9.89539 6.89544 8.99996 8.00001 8.99996C9.10458 8.99996 10 9.89539 10 11V13.5L12.5 13.5V6.56062ZM13.78 5.71933L8.70711 0.646409C8.31659 0.255886 7.68342 0.255883 7.2929 0.646409L2.21987 5.71944C2.21974 5.71957 2.21961 5.7197 2.21949 5.71982L0.469676 7.46963L-0.0606537 7.99996L1.00001 9.06062L1.53034 8.53029L2.00001 8.06062V14.25V15H2.75001L6.00001 15H7.50001H8.50001H10L13.25 15H14V14.25V8.06062L14.4697 8.53029L15 9.06062L16.0607 7.99996L15.5303 7.46963L13.7806 5.71993C13.7804 5.71973 13.7802 5.71953 13.78 5.71933ZM8.50001 11V13.5H7.50001V11C7.50001 10.7238 7.72386 10.5 8.00001 10.5C8.27615 10.5 8.50001 10.7238 8.50001 11Z" fill="currentColor"></path></svg>" fill="white"/>
+          </svg>
+          <a href="../../../../index.html">Home</a>
+        </span>
+      </li><!--
+     --><li style="display: block;">
+        <span style="display: flex; align-items: center;">
+          <svg class="index-item-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="margin-right: 10px; color: white; width: 21px; ">
+            <title>Writing</title>
+            <path d="<svg data-testid="geist-icon" height="16" stroke-linejoin="round" viewBox="0 0 16 16" width="16" style="color: currentcolor;"><path clip-rule="evenodd" d="M4.25 0C3.00736 0 2 1.00736 2 2.25V11V11.25V11.5C2 12.5252 2.61705 13.4062 3.5 13.792V11.5V11.25V11C3.5 10.4477 3.94772 10 4.5 10H12.5V11.2305V12.5H10.5V14H12.5H14V12.5V11.2305V10V8.5V0.75V0H13.25H4.25ZM12.5 8.5V1.5H4.25C3.83579 1.5 3.5 1.83579 3.5 2.25V8.70802C3.80623 8.57422 4.14445 8.5 4.5 8.5H12.5ZM5.5 11.5C5.22386 11.5 5 11.7239 5 12V16L7 14.75L9 16V12C9 11.7239 8.77614 11.5 8.5 11.5H5.5Z" fill="currentColor" fill-rule="evenodd"></path></svg>" fill="white"/>
+          </svg>
+          <a href="../../../../archives/">Writing</a>
+        </span>
+      </li><!--
+     --><li style="display: block;">
+        <span style="display: flex; align-items: center;">
+          <svg class="index-item-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="margin-right: 10px; color: white; width: 21px; ">
+            <title>Projects</title>
+            <path d="<svg data-testid="geist-icon" height="16" stroke-linejoin="round" viewBox="0 0 16 16" width="16" style="color: currentcolor;"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.80808 4.44191L2.25003 4.88386L3.13391 3.99997L2.69196 3.55803L1.63391 2.49997L2.69197 1.44191L3.13391 0.999972L2.25003 0.116089L1.80808 0.558031L0.484858 1.88126C0.143149 2.22296 0.143149 2.77698 0.484859 3.11869L1.80808 4.44191ZM12 0.999972H11.25V2.49997H12H13.5V11.75C13.5 12.7165 12.7165 13.5 11.75 13.5H4.25002C3.28353 13.5 2.50003 12.7165 2.50003 11.75V6.99997V6.24997H1.00003V6.99997V11.75C1.00003 13.5449 2.4551 15 4.25002 15H11.75C13.545 15 15 13.5449 15 11.75V1.74997V0.999972H14.25H12ZM7.75003 4.88386L8.19197 4.44191L9.51519 3.11869C9.8569 2.77698 9.8569 2.22296 9.51519 1.88126L8.19196 0.55803L7.75002 0.116089L6.86614 0.999973L7.30808 1.44191L8.36614 2.49997L7.30809 3.55803L6.86615 3.99997L7.75003 4.88386ZM4.13155 3.89688L4.02847 4.51535L5.26541 4.7215L5.36848 4.10303L5.86848 1.10303L5.97156 0.484566L4.73462 0.278409L4.63155 0.896878L4.13155 3.89688Z" fill="currentColor"></path></svg>" fill="white"/>
+          </svg>
+          <a href="../../../../https:/github.com/KpwnZ">Projects</a>
+        </span>
+      </li>
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">SpiderMonkey Internal</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#JSObject"><span class="toc-number">1.1.</span> <span class="toc-text">JSObject</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://kpwnz.github.io/2024/10/27/SpiderMonkey-Internal/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://kpwnz.github.io/2024/10/27/SpiderMonkey-Internal/&text=SpiderMonkey Internal"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://kpwnz.github.io/2024/10/27/SpiderMonkey-Internal/&title=SpiderMonkey Internal"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://kpwnz.github.io/2024/10/27/SpiderMonkey-Internal/&is_video=false&description=SpiderMonkey Internal"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SpiderMonkey Internal&body=Check out this article: https://kpwnz.github.io/2024/10/27/SpiderMonkey-Internal/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://kpwnz.github.io/2024/10/27/SpiderMonkey-Internal/&title=SpiderMonkey Internal"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://kpwnz.github.io/2024/10/27/SpiderMonkey-Internal/&title=SpiderMonkey Internal"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://kpwnz.github.io/2024/10/27/SpiderMonkey-Internal/&title=SpiderMonkey Internal"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://kpwnz.github.io/2024/10/27/SpiderMonkey-Internal/&title=SpiderMonkey Internal"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://kpwnz.github.io/2024/10/27/SpiderMonkey-Internal/&name=SpiderMonkey Internal&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://kpwnz.github.io/2024/10/27/SpiderMonkey-Internal/&t=SpiderMonkey Internal"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2024
+    Xia0o0o0o
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        
+        <!-- -->
+        <!-- <li><a href="../../../../index.html">Home</a></li> -->
+        <!-- -->
+
+        
+        <a href="../../../../index.html">Home</a>
+        
+
+       <!-- -->
+       
+        <!-- -->
+        <!-- <li><a href="../../../../archives/">Writing</a></li> -->
+        <!-- -->
+
+        
+        <a href="../../../../archives/">Writing</a>
+        
+
+       <!-- -->
+       
+        <!-- -->
+        <!-- <li><a href="../../../../https:/github.com/KpwnZ">Projects</a></li> -->
+        <!-- -->
+
+        
+        <a target="_blank" rel="noopener" href="https://github.com/KpwnZ">Projects</a>
+        
+
+       <!-- -->
+       
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="../../../../js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
